@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <h1>Crear Paquete</h1>
 
 <hr />
@@ -96,7 +94,7 @@
                         <tbody>
                         </tbody>
 
-                        <input type="hidden" id="serviciosSeleccionados" name="serviciosSeleccionados" />
+                        <input type="hidden" id="serviciosSeleccionados" name="serviciosSeleccionados" asp-for="ServiciosSeleccionados" />
 
                     </table>
                 </div>
@@ -115,6 +113,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="~/js/paquetescript.js"></script>
 }
+
         <style>
 
             .btn_crear {
