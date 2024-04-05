@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 
 namespace ProyectoSenaLmour.Models;
 
@@ -28,6 +29,15 @@ public partial class Usuario
     public string Estado { get; set; } = null!;
 
     public int? IdRol { get; set; }
+
+    //por aca
+    public string ConfirmarClave { get; set; }
+
+    public bool Restablecer { get; set; }
+
+    public bool Confirmado { get; set; }
+    public string Token { get; set; }
+    //aca
 
     public virtual Role? IdRolNavigation { get; set; }
 
