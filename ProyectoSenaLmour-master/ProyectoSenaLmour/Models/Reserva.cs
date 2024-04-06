@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoSenaLmour.Models;
 
@@ -10,11 +11,11 @@ public partial class Reserva
     public int NroDocumentoCliente { get; set; }
 
     public int NroDocumentoUsuario { get; set; }
-
+    [DataType(DataType.Date)]
     public DateTime FechaReserva { get; set; }
-
+    [DataType(DataType.Date)]
     public DateTime FechaInicio { get; set; }
-
+    [DataType(DataType.Date)]
     public DateTime FechaFinalizacion { get; set; }
 
     public double SubTotal { get; set; }

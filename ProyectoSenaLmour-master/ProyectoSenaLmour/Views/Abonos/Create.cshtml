@@ -10,50 +10,46 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Abono" method="post">
+        <form asp-action="Create" asp-controller="Abonos" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdAbono" class="control-label"></label>
-                <input asp-for="IdAbono" class="form-control" />
-                <span asp-validation-for="IdAbono" class="text-danger"></span>
-            </div>
+            <input asp-for="IdAbono" type="hidden" />
             <div class="form-group">
                 <label asp-for="IdReserva" class="control-label"></label>
-                <input asp-for="IdReserva" class ="form-control" asp-items="ViewBag.IdReserva"></input>
+                <input asp-for="IdReserva" class="form-control" value="@ViewBag.IdReserva" readonly></input>
             </div>
             <div class="form-group">
                 <label asp-for="FechaAbono" class="control-label"></label>
-                <input asp-for="FechaAbono" class="form-control" />
+                <input type="text" id="inputfechaabono" asp-for="FechaAbono" class="form-control" />
                 <span asp-validation-for="FechaAbono" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ValorDeuda" class="control-label"></label>
-                <input asp-for="ValorDeuda" class="form-control" />
+                <input asp-for="ValorDeuda" value="@ViewBag.ValorDeuda" readonly class="form-control" id="inputDeuda" />
                 <span asp-validation-for="ValorDeuda" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Porcentaje" class="control-label"></label>
-                <input asp-for="Porcentaje" class="form-control" />
+                <input asp-for="Porcentaje" class="form-control" id="inputPorcentaje" readonly />
                 <span asp-validation-for="Porcentaje" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Pendiente" class="control-label"></label>
-                <input asp-for="Pendiente" class="form-control" />
+                <input asp-for="Pendiente" class="form-control" id="inputPendiente" value="@ViewBag.pendiente" readonly />
                 <span asp-validation-for="Pendiente" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SubTotal" class="control-label"></label>
-                <input asp-for="SubTotal" class="form-control" />
+                <input asp-for="SubTotal" class="form-control" id="inputSubtotal" onkeyup="calcularAbono(this)" />
                 <span asp-validation-for="SubTotal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Iva" class="control-label"></label>
-                <input asp-for="Iva" class="form-control" />
+                <input asp-for="Iva" class="form-control" id="inputIva" readonly />
                 <span asp-validation-for="Iva" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CantAbono" class="control-label"></label>
-                <input asp-for="CantAbono" class="form-control" />
+                <input asp-for="CantAbono" class="form-control" id="inputCantAbono" readonly />
                 <span asp-validation-for="CantAbono" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -73,5 +69,34 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="~/js/fechaactual.js"></script>
+
+<script>
+    function calcularAbono(input) {
+        var subtotal = $(input).val() || 0;
+        var deuda = $('#inputDeuda').val();
+        var iva = Math.round(subtotal * 0.19);
+        var total = parseFloat(subtotal) + iva;
+        var porcentaje = Math.floor((100 * subtotal) / deuda);
+
+        if (!isNaN(subtotal)) {
+            if (subtotal > deuda) {
+                porcentaje = 100
+            }
+            $('#inputIva').val(iva)
+            $('#inputCantAbono').val(total)
+            $('#inputPorcentaje').val(porcentaje)
+        } else {
+            $('#inputIva').val('')
+            $('#inputCantAbono').val('')
+            $('#inputPorcentaje').val('')
+        }
+
+
+    }
+</script>
