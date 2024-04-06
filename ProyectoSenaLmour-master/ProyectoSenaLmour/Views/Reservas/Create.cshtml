@@ -16,63 +16,43 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label class="control-label">Cliente</label>
+                <label class="control-label">Identificación Cliente</label>
                 <input class="form-control" asp-items="ViewBag.DocumentoCliente" asp-for="oReserva.NroDocumentoCliente"></input>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Usuario</label>
+                <label class="control-label">Identificación Usuario</label>
                 <input class="form-control" asp-items="ViewBag.DocumentoUsuario" asp-for="oReserva.NroDocumentoUsuario"></input>
-            </div>
-
-        </div>
-        <div class="col-md-4">
+            </div><br>
             <div class="form-group">
-                <label class="control-label" readonly>Fecha Inicio</label>
-                <input type="date" class="form-control" asp-for="oReserva.FechaInicio" />
+                <label class="control-label">Fecha Reserva</label>
+                <input id="fechaHoy" asp-for="oReserva.FechaReserva" type="text" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Fecha FInalizacion</label>
-                <input type="date" class="form-control" asp-for="oReserva.FechaFinalizacion" />
+                <label class="control-label">Fecha Inicio</label>
+                <input type="date" id="fechaInicio" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Numero de Personas</label>
+                <label class="control-label">Fecha Finalización</label>
+                <input type="date" id="fechaFinalizacion" class="form-control" />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Número de Personas</label>
                 <input type="number" class="form-control" asp-for="oReserva.NroPersonas" />
                 <span class="text-danger"></span>
             </div>
         </div>
-        <h1></h1>
-        <br>
-        <br>
         <div class="col-md-4">
-            <div class="form-group">
-                <label  class="control-label">Fecha Reserva</label>
-                <input type="text" class="form-control" id="fechaActual" asp-for="oReserva.FechaReserva" />
-                <span  class="text-danger"></span>
-            </div><br>
-            <div class="form-group">
-                <label  class="control-label">Metodo Pago</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdMetodoPago" asp-items="Model.oListaMetodosPago">
-                    <option selected disabled>  Selecciona  </option>
-                </select>
-            </div><br>
-            <div class="form-group">
-                <label  class="control-label">Estado Reserva</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdEstadoReserva" asp-items="Model.oListaEstados">
-                    <option selected disabled>  Selecciona  </option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label  class="control-label">Descuento</label>
-                <input class="form-control" asp-for="oReserva.Descuento" id="inputDescuento" oninput="formatoDescuento(this)" onkeyup="actualizarInfoCosto()" />
-                <span  class="text-danger"></span>
-            </div><br>
             <div class="form-group">
                 <label class="control-label">Sub Total</label>
                 <input class="form-control" asp-for="oReserva.SubTotal" id="inputSubTotal" readonly />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Descuento</label>
+                <input class="form-control" asp-for="oReserva.Descuento" id="inputDescuento" oninput="formatoDescuento(this)" onkeyup="actualizarInfoCosto()" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
@@ -84,10 +64,21 @@
                 <label  class="control-label">Total</label>
                 <input class="form-control" asp-for="oReserva.MontoTotal" id="inputTotal" readonly />
                 <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Metodo Pago</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdMetodoPago" asp-items="Model.oListaMetodosPago">
+                    <option selected disabled>  Selecciona  </option>
+                </select>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Estado Reserva</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdEstadoReserva" asp-items="Model.oListaEstados">
+                    <option selected disabled>  Selecciona  </option>
+                </select>
             </div>
         </div>
-        <h1></h1>
-        <br />
+
         <div class="col-md-4">
             <div class="form-group">
 
@@ -160,8 +151,11 @@
     <br>
 
     <div class="form-group">
-        <input type="submit" value="Crear" class="btn_crear" /> |
-        <a asp-action="Index" class="btn_volver">Atrás</a>
+        <input type="submit" value="Crear" class="btn_crear" /> 
+        <div class="separador">
+            <label>|</label>
+        </div>
+        <a asp-action="Index" class="btn_volver">Volver</a>
     </div>
 </form>
 
@@ -176,7 +170,7 @@
 
         .btn_crear {
             cursor: pointer;
-            top: 1200px;
+            top: 593px;
             position: absolute;
             border: 2px solid #000;
             border-radius: 10px;
@@ -185,6 +179,12 @@
             background-color: #393d3f;
             color: white;
 
+        }
+
+        .separador{
+            position: absolute;
+            display: flex;
+            right: 77%;
         }
 
         .btn_volver {
@@ -198,28 +198,12 @@
             background-color: #393d3f;
             color: white;
             cursor: pointer;
-            top: 1200px;
+            top: 593px;
             position: absolute;
-            right: 69%;
+            right: 71%;
         }
 
     </style>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>
-        const fecha = new Date();
-        var formato = 'dd/mm/yyyy';
-
-        const map = {
-            dd: (fecha.getDate() < 10 ? '0' : '') + fecha.getDate(),
-            mm: (fecha.getMonth() + 1 < 10 ? '0' : '') + (fecha.getMonth() + 1),
-            yyyy: fecha.getFullYear()
-        }
-
-        var fechaHoy = formato.replace(/dd|mm|yyyy/gi, matched => map[matched]);
-
-        $('#fechaHoy').val(fechaHoy);
-    </script>
-}
 
