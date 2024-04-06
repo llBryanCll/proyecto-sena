@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProyectoSenaLmour.Models.Abono>
+﻿@model List<Abono>
 
 @{
     ViewData["Title"] = "Index";
@@ -20,84 +20,57 @@
         <div class="row">
             <div class="col-12" />
             <p>
-                <a asp-action="Create" button type="button" class="btn btn-success">Crear Abonos</a>
-
-                <form asp-controller="Abonos" asp-action="Index">
-                </form>
+                <a asp-action="Create" asp-route-idreserva="@ViewBag.IdReserva" button type="button" class="btn btn-success">Crear Abonos</a>
+               
 
             </p>
 
         </div>
 
-<table id="paymentTable" class="table table-striped table-bordered">
+<table id="bookingTable" class="table table-striped table-bordered">
     <thead>
-        <tr>
+        <tr>            
             <th>
-                @Html.DisplayNameFor(model => model.FechaAbono)
+                Id Abono
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ValorDeuda)
+                Total
+            </th>            
+            <th>
+                Pendiente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Porcentaje)
+                Fecha Abono
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pendiente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SubTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Iva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CantAbono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdReservaNavigation)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FechaAbono)
+                @Html.DisplayFor(modelItem => item.IdAbono)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ValorDeuda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Porcentaje)
-            </td>
+                @Html.DisplayFor(modelItem => item.CantAbono)
+            </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.Pendiente)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SubTotal)
+                @Html.DisplayFor(modelItem => item.FechaAbono)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Iva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantAbono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdReservaNavigation.IdReserva)
-            </td>
+            
             <td>
                     <a asp-action="Edit" button type="button" class="btn btn-primary" asp-route-id="@item.IdAbono">Editar</a> |
                     <a asp-action="Details" button type="button" class="btn btn-secondary" asp-route-id="@item.IdAbono">Detalles</a> |
-                    <a asp-action="Delete" button type="button" class="btn btn-danger" asp-route-id="@item.IdAbono">Eliminar</a>
+                    <a asp-action="Anular" button type="button" class="btn btn-danger" asp-route-id="@item.IdAbono">Anular</a>
             </td>
         </tr>
+
 }
     </tbody>
 </table>
+
+    <div class="btn_volver btn btn-dark btn-sm" style="max-width:150px">
+        <a asp-action="Index" asp-controller="Reservas">Volver</a>
+    </div>
