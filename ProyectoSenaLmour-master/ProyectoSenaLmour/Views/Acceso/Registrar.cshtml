@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registro</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1; /* Coloca el video detrás de los demás elementos */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('../../wwwroot/css/tipi-tienda-de-campana-en-kampaoh-cambrils.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .login-form {
+            position: relative; /* Necesario para la posición del botón de cierre */
+            max-width: 350px; /* Ancho máximo para el formulario */
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Efecto de sombra más suave */
+            background: rgba(255, 255, 255, 0.8); /* Color de fondo de la tarjeta */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .side-image {
+            max-width: 550px; /* Tamaño máximo de la imagen */
+            margin-right: 30px; /* Espacio entre la imagen y el formulario */
+            overflow: hidden; /* Oculta cualquier desbordamiento */
+            border-radius: 15px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            transition: box-shadow 0.3s ease; /* Transición suave en la sombra */
+        }
+
+            /* Efecto de sombra al pasar el ratón */
+            .side-image:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+            }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted playsinline>
+        <source src="~/css/lluvia.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <img src="~/css/tipi-tienda-de-campana-en-kampaoh-cambrils.jpeg" alt="Side Image" class="side-image">
+        <div class="login-form">
+            <div class="card p-4">
+                <h3 class="card-title text-center mb-3">Registro</h3>
+                @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+                {
+                    <div class="alert alert-success">
+                        <p>@ViewBag.Mensaje</p>
+                        <a class="btn btn-success" href="#">Inicia sesión</a>
+                    </div>
+                }
+                <form asp-controller="Registro" asp-action="Registrar" method="post">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="Nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correo" name="Correo">
+                        <div class="form-text">Nunca compartiremos su correo electrónico con nadie.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contrasena" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="contrasena" name="Contraseña">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmarContrasena" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="confirmarContrasena" name="ConfirmarContraseña">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </div>
+                </form>
+                <div class="form-group text-center">
+                   
+                    <a class="btn btn-link" href="@Url.Action("Index", "Acceso", new { area = "Acceso" })">¿Ya tienes una cuenta? Inicia sesión</a>
+
+                </div>
+                <button type="button" class="close-btn"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit-code.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
