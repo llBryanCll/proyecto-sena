@@ -69,12 +69,14 @@ namespace ProyectoSenaLmour.Controllers
         }
 
 
-        //prueba
+		//prueba
 
-     
+		
+		}
 
 
 
-    }
-}
+
+	}
+
 
