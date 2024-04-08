@@ -25,8 +25,17 @@
 	<style>
 
 
-
 		video {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: auto;
+			z-index: -1;
+		}
+
+
+		/* video {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -34,7 +43,7 @@
 			min-height: 100%;
 			z-index: -1; /* Coloca el video detrás de los demás elementos */
 		}
-
+ */
 
 		body {
 			margin: 0;
@@ -55,8 +64,9 @@
 
 		.login-form {
 			position: relative; /* Necesario para la posición del botón de cierre */
-			max-width: 400px; /* Ancho máximo para el formulario */
+			max-width: 320px; /* Ancho máximo para el formulario */
 		}
+
 
 		.card {
 			border-radius: 15px;
@@ -74,32 +84,45 @@
 		}
 
 		.side-image {
+			max-width: 550px; /* Ajusta el tamaño máximo de la imagen */
+			max-height: 400px; /* Ajusta la altura máxima de la imagen */
+			margin-right: 30px;
+			overflow: hidden;
+			border-radius: 15px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			transition: box-shadow 0.3s ease;
+		}
+
+		/* .side-image {
 			max-width: 550px; /* Tamaño máximo de la imagen */
 			margin-right: 30px; /* Espacio entre la imagen y el formulario */
 			overflow: hidden; /* Oculta cualquier desbordamiento */
 			border-radius: 15px; /* Bordes redondeados */
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 			transition: box-shadow 0.3s ease; /* Transición suave en la sombra */
-		}
+		} */
 
 			/* Efecto de sombra al pasar el ratón */
 			.side-image:hover {
 				box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
 			}
 
+		
 	</style>
 </head>
 <body>
 
 	<video autoplay loop muted playsinline>
-		<source src="~/css/mixkit-very-close-shot-of-the-leaves-of-a-tree-wet-18310-medium.mp4" type="video/mp4">
+		<source src="~/css/video-fondo.mp4" type="video/mp4">
 	</video>
 
 	<div class="container">
-		<img src="~/css/tipi-tienda-de-campana-en-kampaoh-cambrils.jpeg" alt="Side Image" class="side-image">
+		<img src="~/css/foto-glam.jpeg" alt="Side Image" class="side-image">
 		<div class="login-form">
 			<div class="card p-4">
-				<h3 class="card-title text-center mb-3">Iniciar sesión</h3>
+
+				
+						<h3 class="card-title text-center mb-3" >Iniciar sesión</h3>
 				<form asp-controller="acceso" asp-action="Index" method="post">
 					<div class="mb-3">
 						<label for="exampleInputEmail1" class="form-label">Email</label>
@@ -132,10 +155,11 @@
 
 
 
-				<a class="btn btn-link" href="@Url.Action("Registrar","Acceso")">¿No tienes una cuenta? Registrate</a>
-				<a class="btn btn-link" href="@Url.Action("Recuperar","Acceso")">¿Has olvidado tu contraseña?</a>
 
-
+		
+				<a class="btn btn-link" href="@Url.Action("Registrar", "Acceso", new { area = "Acceso" })">¿No tienes una cuenta? Regístrate</a>
+				<a class="btn btn-link" href="@Url.Action("Recuperar", "Acceso", new { area = "Acceso" })">¿Has olvidado tu contraseña?</a>
+			
 			</div>
 	</div>
 

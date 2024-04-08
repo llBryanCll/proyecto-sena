@@ -1,8 +1,6 @@
-﻿@model UsuarioF
-
+﻿
 @{
-    ViewData["Title"] = "Registrar";
-    Layout = "~/Views/Acceso/Registrar.cshtml";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -41,7 +39,7 @@
 
         .login-form {
             position: relative; /* Necesario para la posición del botón de cierre */
-            max-width: 400px; /* Ancho máximo para el formulario */
+            max-width: 350px; /* Ancho máximo para el formulario */
         }
 
         .card {
@@ -76,7 +74,7 @@
 </head>
 <body>
     <video autoplay loop muted playsinline>
-        <source src="~/css/mixkit-very-close-shot-of-the-leaves-of-a-tree-wet-18310-medium.mp4" type="video/mp4">
+        <source src="~/css/lluvia.mp4" type="video/mp4">
     </video>
 
     <div class="container">
@@ -114,7 +112,9 @@
                     </div>
                 </form>
                 <div class="form-group text-center">
-                    <p>¿Ya tienes una cuenta? <a href="#">Inicia sesión</a></p>
+                   
+                    <a class="btn btn-link" href="@Url.Action("Index", "Acceso", new { area = "Acceso" })">¿Ya tienes una cuenta? Inicia sesión</a>
+
                 </div>
                 <button type="button" class="close-btn"><i class="fas fa-times"></i></button>
             </div>
@@ -127,3 +127,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
+

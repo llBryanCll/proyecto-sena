@@ -31,12 +31,7 @@ public partial class Usuario
     public int? IdRol { get; set; }
 
     //por aca
-    public string ConfirmarClave { get; set; }
-
-    public bool Restablecer { get; set; }
-
-    public bool Confirmado { get; set; }
-    public string Token { get; set; }
+    
     //aca
 
     public virtual Role? IdRolNavigation { get; set; }
