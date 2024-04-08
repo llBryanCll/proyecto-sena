@@ -9,29 +9,27 @@ $('#selectServicios').change(function () {
         data: { servicioId: selectedServicioId },
         dataType: 'json',
         success: function (data) {
-            $('#inputCostoServicio').val(data.costo)
+            $('#inputCostoServicio').val(data.costo);
         },
         error: function () {
-            console.error('Error al obtener el costo del servicio.')
+            console.error('Error al obtener el costo del servicio.');
         }
-    })
+    });
 });
 
 $('#btnAgregarServicio').click(function () {
     var selectedServicioId = $('#selectServicios').val();
     var selectedServicioText = $('#selectServicios option:selected').text();
     var selectedServicioCosto = $('#inputCostoServicio').val();
-    var costoFloat = parseFloat(selectedServicioCosto)
+    var costoFloat = parseFloat(selectedServicioCosto);
 
     if (selectedServicioId) {
         if (!serviciosSeleccionados.some(servicio => servicio.id == selectedServicioId)) {
 
             serviciosSeleccionados.push({
-
                 id: selectedServicioId,
                 nombre: selectedServicioText,
                 costo: selectedServicioCosto
-
             });
 
             var row = '<tr>' +
@@ -42,21 +40,19 @@ $('#btnAgregarServicio').click(function () {
             $('#tablaServiciosSeleccionados tbody').append(row);
 
             actualizarInputServiciosSeleccionados();
-            actualizarInfoCosto();
+            actualizarInfoCosto(); // Llama a la función para actualizar el costo total
         }
     }
-
 });
 
 function eliminarServicio(btn) {
-
     var rowIndex = $(btn).closest('tr').index();
     serviciosSeleccionados.splice(rowIndex, 1);
 
     $(btn).closest('tr').remove();
 
     actualizarInputServiciosSeleccionados();
-    actualizarInfoCosto();
+    actualizarInfoCosto(); // Llama a la función para actualizar el costo total
 }
 
 function actualizarInputServiciosSeleccionados() {
@@ -64,20 +60,16 @@ function actualizarInputServiciosSeleccionados() {
 }
 
 function actualizarInfoCosto() {
-
     var costoServicio = calcularCostosServicio();
-}
-
-function actualizarInfoCosto() {
-
-    var costoServicio = calcularCostosServicio();
+    // Actualiza la información en la vista
+    $('#totalCostoServicios').text(costoServicio);
 }
 
 function calcularCostosServicio() {
     var total = 0;
     serviciosSeleccionados.forEach(servicio =>
         total += parseFloat(servicio.costo)
-    )
+    );
 
     return total;
 }

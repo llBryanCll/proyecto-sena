@@ -41,9 +41,9 @@
         <dt class="col-sm-2">Servicios</dt>
         <dd class="col-sm-10">
             <ul>
-                @foreach (var servicio in Model.PaqueteServicios.Select(ps => ps.IdServicioNavigation))
+                @foreach (var paqueteServicio in Model.PaqueteServicios)
                 {
-                    <li>@servicio.NomServicio - Costo: @servicio.Costo</li>
+                    <li>@paqueteServicio.IdServicioNavigation.NomServicio - Costo: @paqueteServicio.IdServicioNavigation.Costo</li>
                 }
             </ul>
         </dd>

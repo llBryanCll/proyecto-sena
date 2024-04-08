@@ -20,7 +20,7 @@ namespace ProyectoSenaLmour.Controllers
         }
 
         // GET: Paquetes
-        public IActionResult index()
+        public IActionResult Index()
         {
             var paquetes = _context.Paquetes
                .Include(p => p.IdHabitacionNavigation)
@@ -74,11 +74,26 @@ namespace ProyectoSenaLmour.Controllers
         [HttpPost]
         public IActionResult Create(PaqueteVM oPaqueteVM)
         {
+            // Agregar el paquete a la base de datos
             _context.Paquetes.Add(oPaqueteVM.oPaquete);
+            _context.SaveChanges();
+
+            // Guardar los servicios asociados al paquete
+            foreach (var servicioId in oPaqueteVM.ServiciosSeleccionados)
+            {
+                PaqueteServicio paqueteServicio = new PaqueteServicio
+                {
+                    IdPaquete = oPaqueteVM.oPaquete.IdPaquete,
+                    IdServicio = servicioId,
+                    // Asignar el costo del servicio si es necesario
+                };
+                _context.PaqueteServicios.Add(paqueteServicio);
+            }
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
+
 
         public IActionResult ObtenerCostoServicio(int servicioId)
         {
@@ -92,6 +107,7 @@ namespace ProyectoSenaLmour.Controllers
             });
         }
 
+        // GET: Paquetes/Details/5
         // GET: Paquetes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -111,8 +127,18 @@ namespace ProyectoSenaLmour.Controllers
                 return NotFound();
             }
 
+            // Cargar explícitamente las propiedades de navegación de PaqueteServicio si no se cargaron anteriormente
+            foreach (var paqueteServicio in paquete.PaqueteServicios)
+            {
+                if (paqueteServicio.IdServicioNavigation == null)
+                {
+                    _context.Entry(paqueteServicio).Reference(ps => ps.IdServicioNavigation).Load();
+                }
+            }
+
             return View(paquete);
         }
+
 
 
 
