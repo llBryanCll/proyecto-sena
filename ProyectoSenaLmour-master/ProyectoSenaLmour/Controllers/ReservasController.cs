@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProyectoSenaLmour.Models;
 using ProyectoSenaLmour.Models.ViewModels;
 
@@ -54,120 +55,82 @@ namespace ProyectoSenaLmour.Controllers
             ViewBag.Servicios = serviciosDisponibles;
 
             return View(oReservaVM);
-
-
-
         }
 
         [HttpPost]
         public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
-            // Guardar la reserva
-            _context.Reservas.Add(oReservaVM.oReserva);
-            _context.SaveChanges();
 
-            // Obtener el ID de la reserva recién guardada
-            int reservaId = oReservaVM.oReserva.IdReserva;
+            dynamic paqueteSeleccionadoObj = null;
+            dynamic serviciosSeleccionadosObj = null;
 
-            // Guardar el detalle del paquete seleccionado
+            // Procesa los datos de paqueteSeleccionado si es necesario
             if (!string.IsNullOrEmpty(paqueteSeleccionado))
             {
-                int paqueteId = int.Parse(paqueteSeleccionado);
-                DetalleReservaPaquete detallePaquete = new DetalleReservaPaquete
-                {
-                    IdReserva = reservaId,
-                    IdPaquete = paqueteId
-                };
-                _context.DetalleReservaPaquetes.Add(detallePaquete);
+                paqueteSeleccionadoObj = JsonConvert.DeserializeObject(paqueteSeleccionado);
+                // Realiza cualquier procesamiento adicional que sea necesario con el objeto paqueteSeleccionadoObj
             }
 
-            // Guardar los detalles de los servicios seleccionados
+            // Procesa los datos de serviciosSeleccionados si es necesario
             if (!string.IsNullOrEmpty(serviciosSeleccionados))
             {
-                string[] servicioIds = serviciosSeleccionados.Split(',');
-                foreach (var servicioIdString in servicioIds)
-                {
-                    int servicioId = int.Parse(servicioIdString);
-                    DetalleReservaServicio detalleServicio = new DetalleReservaServicio
-                    {
-                        IdReserva = reservaId,
-                        IdServicio = servicioId
-                    };
-                    _context.DetalleReservaServicios.Add(detalleServicio);
-                }
+                serviciosSeleccionadosObj = JsonConvert.DeserializeObject(serviciosSeleccionados);
+                // Realiza cualquier procesamiento adicional que sea necesario con el objeto serviciosSeleccionadosObj
             }
 
-            // Guardar los cambios en la base de datos
+            // Continúa con la lógica existente
+            _context.Reservas.Add(oReservaVM.oReserva);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
 
-
-        //[HttpPost]
-        //public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
-        //{
-
-        //    _context.Reservas.Add(oReservaVM.oReserva);
-        //    _context.SaveChanges();
-
-
-        //    return RedirectToAction("Index");
-        //}
-
-        //public IActionResult ObtenerCostoPaquete(int paqueteId)
-        //{
-        //    var CostoPaquete = _context.Paquetes
-        //        .Where(p => p.IdPaquete == paqueteId)
-        //        .FirstOrDefault();
-
-        //    return Json(new
-        //    {
-        //        costo = CostoPaquete.Costo
-        //    });
-        //}
-
-        //public IActionResult ObtenerCostoServicio(int servicioId)
-        //{
-        //    var CostoServicio = _context.Servicios
-        //        .Where(s => s.IdServicio == servicioId)
-        //        .FirstOrDefault();
-
-        //    return Json(new
-        //    {
-        //        costo = CostoServicio.Costo
-        //    });
-        //}
-
-
-        // GET: Reservas/Detalle/
-        public async Task<IActionResult> Details(int id)
+        public IActionResult ObtenerCostoPaquete(int paqueteId)
         {
+            var CostoPaquete = _context.Paquetes
+                .Where(p => p.IdPaquete == paqueteId)
+                .FirstOrDefault();
 
-            ReservaVM oReservaVM = new ReservaVM()
+            return Json(new
             {
-                oReserva = new Reserva(),
+                costo = CostoPaquete.Costo
+            });
+        }
 
-                oListaEstados = _context.EstadosReservas.Select(reserva => new SelectListItem()
-                {
-                    Text = reserva.NombreEstadoReserva,
-                    Value = reserva.IdEstadoReserva.ToString()
-                }).ToList(),
+        public IActionResult ObtenerCostoServicio(int servicioId)
+        {
+            var CostoServicio = _context.Servicios
+                .Where(s => s.IdServicio == servicioId)
+                .FirstOrDefault();
 
-                oListaMetodosPago = _context.MetodoPagos.Select(mtp => new SelectListItem()
-                {
-                    Text = mtp.NomMetodoPago,
-                    Value = mtp.IdMetodoPago.ToString()
-                }).ToList(),
-            };
+            return Json(new
+            {
+                costo = CostoServicio.Costo
+            });
+        }
 
-            if (oReservaVM == null)
+
+        // GET: Reservas/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.Reservas == null)
             {
                 return NotFound();
             }
 
-            return View(oReservaVM);
+            var reserva = await _context.Reservas
+                .Include(r => r.IdEstadoReservaNavigation)
+                .Include(r => r.IdMetodoPagoNavigation)
+                .Include(r => r.NroDocumentoClienteNavigation)
+                .Include(r => r.NroDocumentoUsuarioNavigation)
+                .FirstOrDefaultAsync(m => m.IdReserva == id);
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            return View(reserva);
         }
 
 
