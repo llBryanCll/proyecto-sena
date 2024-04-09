@@ -16,7 +16,12 @@
             <input type="hidden" asp-for="NroDocumento" />
             <div class="form-group">
                 <label asp-for="IdTipoDocumento" class="control-label"></label>
-                <input asp-for="IdTipoDocumento" class="form-control" />
+                <select asp-for="IdTipoDocumento" class="form-control">
+                    <option value="">Seleccione un tipo de documento</option>
+                    <option value="1">CC</option>
+                    <option value="2">TI</option>
+                    <option value="3">CE</option>
+                </select>
                 <span asp-validation-for="IdTipoDocumento" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,12 +61,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
-                <input asp-for="Genero" class="form-control" />
+                <select asp-for="Genero" class="form-control">
+                    <option value="">Seleccione una opción</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="No Binario">No Binario</option>
+                    <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                </select>
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
+           
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
+                <select asp-for="Estado" class="form-control">
+                    <option value="">Seleccione el estado</option>
+                    <option value="1">Activado</option>
+                    <option value="0">Desactivado</option>
+                </select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">
