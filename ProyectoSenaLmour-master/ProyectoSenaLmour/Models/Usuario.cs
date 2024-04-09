@@ -37,4 +37,9 @@ public partial class Usuario
     public virtual Role? IdRolNavigation { get; set; }
 
     public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+
+    internal static void UpdateEstado(int id, string nuevoEstado)
+    {
+        throw new NotImplementedException();
+    }
 }

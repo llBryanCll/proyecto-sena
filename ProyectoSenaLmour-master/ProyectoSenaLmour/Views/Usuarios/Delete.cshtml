@@ -82,7 +82,32 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="NroDocumento" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <input type="submit" value="Eliminar" class="btn btn-danger" onclick="swalExample()" /> |
         <a asp-action="Index" class="btn btn-secondary">Volver</a>
     </form>
 </div>
+
+
+
+<script>
+
+    function swalExample() {
+        swal({
+            title: "¿Estás seguro?",
+            text: "¡No podrás recuperar este archivo imaginario!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "¡Sí, elimínalo!",
+            closeOnConfirm: false
+        },
+            function () {
+                swal("¡Eliminado!", "Tu archivo imaginario ha sido eliminado.", "success");
+            });
+
+        // Close the dialog after 15 seconds (adjust as needed)
+        setTimeout(function () {
+            swal.close();
+        }, 15000); // Milliseconds
+    }
+</script>
