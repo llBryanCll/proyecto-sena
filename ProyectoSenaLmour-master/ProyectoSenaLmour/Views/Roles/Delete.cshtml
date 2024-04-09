@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Eliminar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Seguro que quieres borrar esto?</h3>
 <div>
-    <h4>Role</h4>
+   
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -28,7 +28,33 @@
     
     <form asp-action="Delete" asp-controller="Roles">
         <input type="hidden" asp-for="IdRol" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" onclick="swalExample()" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
     </form>
 </div>
+
+
+
+           
+<script>
+
+function swalExample() {
+  swal({
+    title: "¿Estás seguro?",
+    text: "¡No podrás recuperar este archivo imaginario!",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonClass: "btn-danger",
+    confirmButtonText: "¡Sí, elimínalo!",
+    closeOnConfirm: false
+  },
+  function() {
+    swal("¡Eliminado!", "Tu archivo imaginario ha sido eliminado.", "success");
+  });
+
+  // Close the dialog after 5 seconds (adjust as needed)
+  setTimeout(function() {
+    swal.close();
+  }, 15000); // Milliseconds
+}
+</script>

@@ -28,6 +28,17 @@ namespace ProyectoSenaLmour.Controllers
             return View(await lmourContext.ToListAsync());
         }
 
+
+        public IActionResult CambiarEstado(int id, string nuevoEstado)
+        {
+            // Update the user's state in your data store (e.g., database)
+            Usuario.UpdateEstado(id, nuevoEstado);
+
+            // Optional: Return a success message or redirect to another action
+
+            return Ok(); // Or other appropriate response
+        }
+
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -167,4 +178,6 @@ namespace ProyectoSenaLmour.Controllers
           return (_context.Usuarios?.Any(e => e.NroDocumento == id)).GetValueOrDefault();
         }
     }
+
+   
 }

@@ -13,7 +13,7 @@ namespace ProyectoSenaLmour.Controllers
         {
             _context = context;
         }
-        [Authorize(Roles = "administrador")]
+      
         public IActionResult Index()
         {
             return View();
