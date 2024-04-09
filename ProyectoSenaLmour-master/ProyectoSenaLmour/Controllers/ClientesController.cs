@@ -58,6 +58,11 @@ namespace ProyectoSenaLmour.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NroDocumento,IdTipoDocumento,Nombres,Apellidos,Celular,Correo,Contraseña,Telefono,Direccion,Genero,Estado,IdRol")] Cliente cliente)
         {
+            ViewData["IdRol"] = new SelectList(_context.Roles, "IdRol", "IdRol", cliente.IdRol);
+            ViewData["IdTipoDocumento"] = new SelectList(_context.TipoDocumentos, "IdTipoDocumento", "IdTipoDocumento", cliente.IdTipoDocumento);
+            ViewData["Generos"] = new SelectList(new[] { "Masculino", "Femenino", "Prefiero no decirlo" });
+            ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
+
             if (ModelState.IsValid)
             {
                 _context.Add(cliente);
@@ -65,14 +70,8 @@ namespace ProyectoSenaLmour.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["IdRol"] = new SelectList(_context.Roles, "IdRol", "IdRol", cliente.IdRol);
-            ViewData["IdTipoDocumento"] = new SelectList(_context.TipoDocumentos, "IdTipoDocumento", "IdTipoDocumento", cliente.IdTipoDocumento);
-            ViewData["Generos"] = new SelectList(new[] { "Masculino", "Femenino", "Prefiero no decirlo" });
-            ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
-
             return View(cliente);
         }
-
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
