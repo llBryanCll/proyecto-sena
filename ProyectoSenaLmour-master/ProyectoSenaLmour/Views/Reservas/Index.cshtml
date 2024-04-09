@@ -79,9 +79,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FechaReserva)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdEstadoReservaNavigation.IdEstadoReserva)
-                </td>
+                        <td>
+                            @switch (item.IdEstadoReservaNavigation.IdEstadoReserva)
+                            {
+                                case 1:
+                                    <span>Reservado</span>
+                                    break;
+                                case 2:
+                                    <span>Por confirmar</span>
+                                    break;
+                                case 3:
+                                    <span>Confirmado</span>
+                                    break;
+                                case 4:
+                                    <span>En ejecución</span>
+                                    break;
+                                case 5:
+                                    <span>Anulado</span>
+                                    break;
+                                case 6:
+                                    <span>Cancelado</span>
+                                    break;
+                                default:
+                                    <span>Estado desconocido</span>
+                                    break;
+                            }
+                        </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MontoTotal)
                 </td>
@@ -109,6 +132,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.NroDocumentoUsuarioNavigation.NroDocumento)
             </td> *@
+           
             <td>
                     <a asp-action="Edit" button type="button" class="btn btn-primary" asp-route-id="@item.IdReserva">Editar</a> |
                     <a asp-action="Details" button type="button" class="btn btn-secondary" asp-route-id="@item.IdReserva">Detalles</a> |

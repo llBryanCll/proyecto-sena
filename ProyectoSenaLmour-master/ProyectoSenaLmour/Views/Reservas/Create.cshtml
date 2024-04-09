@@ -16,25 +16,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label class="control-label">Identificación Cliente</label>
+                <label class="control-label">Documento Cliente</label>
                 <input class="form-control" asp-items="ViewBag.DocumentoCliente" asp-for="oReserva.NroDocumentoCliente"></input>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Identificación Usuario</label>
+                <label class="control-label">Documento Usuario</label>
                 <input class="form-control" asp-items="ViewBag.DocumentoUsuario" asp-for="oReserva.NroDocumentoUsuario"></input>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Fecha Reserva</label>
+                <label class="control-label">Fecha de Reserva</label>
                 <input id="fechaHoy" asp-for="oReserva.FechaReserva" type="text" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Fecha Ingreso</label>
+                <label class="control-label">Fecha de Ingreso</label>
                 <input type="date" id="fechaIngreso" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Fecha Salida</label>
+                <label class="control-label">Fecha de Salida</label>
                 <input type="date" id="fechaSalida" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
@@ -46,7 +46,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="control-label">Sub Total</label>
+                <label class="control-label">SubTotal</label>
                 <input class="form-control" asp-for="oReserva.SubTotal" id="inputSubTotal" readonly />
                 <span class="text-danger"></span>
             </div><br>
@@ -61,18 +61,18 @@
                 <span  class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label  class="control-label">Total</label>
+                <label  class="control-label">Monto Total</label>
                 <input class="form-control" asp-for="oReserva.MontoTotal" id="inputTotal" readonly />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Metodo Pago</label>
+                <label class="control-label">Método de Pago</label>
                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdMetodoPago" asp-items="Model.oListaMetodosPago">
                     <option selected disabled>  Selecciona  </option>
                 </select>
             </div><br>
             <div class="form-group">
-                <label class="control-label">Estado Reserva</label>
+                <label class="control-label">Estado de Reserva</label>
                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdEstadoReserva" asp-items="Model.oListaEstados">
                     <option selected disabled>  Selecciona  </option>
                 </select>
@@ -99,7 +99,7 @@
 
                 <br /><br />
 
-                <a class="btn btn-success" id="btnAgregarServicio">Agregar servicios</a>
+                <a class="btn btn-success" id="btnAgregarServicio">Agregar Servicio</a>
                 <br /><br />
 
                 <select class="form-select form-select-sm" id="selectServicios" aria-label=".form-select-sm example">
