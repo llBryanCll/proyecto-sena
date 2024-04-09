@@ -59,41 +59,86 @@ namespace ProyectoSenaLmour.Controllers
 
         }
 
-
         [HttpPost]
         public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
-
+            // Guardar la reserva
             _context.Reservas.Add(oReservaVM.oReserva);
             _context.SaveChanges();
 
+            // Obtener el ID de la reserva recién guardada
+            int reservaId = oReservaVM.oReserva.IdReserva;
+
+            // Guardar el detalle del paquete seleccionado
+            if (!string.IsNullOrEmpty(paqueteSeleccionado))
+            {
+                int paqueteId = int.Parse(paqueteSeleccionado);
+                DetalleReservaPaquete detallePaquete = new DetalleReservaPaquete
+                {
+                    IdReserva = reservaId,
+                    IdPaquete = paqueteId
+                };
+                _context.DetalleReservaPaquetes.Add(detallePaquete);
+            }
+
+            // Guardar los detalles de los servicios seleccionados
+            if (!string.IsNullOrEmpty(serviciosSeleccionados))
+            {
+                string[] servicioIds = serviciosSeleccionados.Split(',');
+                foreach (var servicioIdString in servicioIds)
+                {
+                    int servicioId = int.Parse(servicioIdString);
+                    DetalleReservaServicio detalleServicio = new DetalleReservaServicio
+                    {
+                        IdReserva = reservaId,
+                        IdServicio = servicioId
+                    };
+                    _context.DetalleReservaServicios.Add(detalleServicio);
+                }
+            }
+
+            // Guardar los cambios en la base de datos
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult ObtenerCostoPaquete(int paqueteId)
-        {
-            var CostoPaquete = _context.Paquetes
-                .Where(p => p.IdPaquete == paqueteId)
-                .FirstOrDefault();
 
-            return Json(new
-            {
-                costo = CostoPaquete.Costo
-            });
-        }
 
-        public IActionResult ObtenerCostoServicio(int servicioId)
-        {
-            var CostoServicio = _context.Servicios
-                .Where(s => s.IdServicio == servicioId)
-                .FirstOrDefault();
+        //[HttpPost]
+        //public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
+        //{
 
-            return Json(new
-            {
-                costo = CostoServicio.Costo
-            });
-        }
+        //    _context.Reservas.Add(oReservaVM.oReserva);
+        //    _context.SaveChanges();
+
+
+        //    return RedirectToAction("Index");
+        //}
+
+        //public IActionResult ObtenerCostoPaquete(int paqueteId)
+        //{
+        //    var CostoPaquete = _context.Paquetes
+        //        .Where(p => p.IdPaquete == paqueteId)
+        //        .FirstOrDefault();
+
+        //    return Json(new
+        //    {
+        //        costo = CostoPaquete.Costo
+        //    });
+        //}
+
+        //public IActionResult ObtenerCostoServicio(int servicioId)
+        //{
+        //    var CostoServicio = _context.Servicios
+        //        .Where(s => s.IdServicio == servicioId)
+        //        .FirstOrDefault();
+
+        //    return Json(new
+        //    {
+        //        costo = CostoServicio.Costo
+        //    });
+        //}
 
 
         // GET: Reservas/Detalle/

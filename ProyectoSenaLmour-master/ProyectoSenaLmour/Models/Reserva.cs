@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoSenaLmour.Models;
 
@@ -8,29 +7,29 @@ public partial class Reserva
 {
     public int IdReserva { get; set; }
 
-    public int NroDocumentoCliente { get; set; }
+    public int? NroDocumentoCliente { get; set; }
 
-    public int NroDocumentoUsuario { get; set; }
-    [DataType(DataType.Date)]
-    public DateTime FechaReserva { get; set; }
-    [DataType(DataType.Date)]
-    public DateTime FechaInicio { get; set; }
-    [DataType(DataType.Date)]
-    public DateTime FechaFinalizacion { get; set; }
+    public int? NroDocumentoUsuario { get; set; }
 
-    public double SubTotal { get; set; }
+    public DateTime? FechaReserva { get; set; }
 
-    public double Descuento { get; set; }
+    public DateTime? FechaInicio { get; set; }
 
-    public double Iva { get; set; }
+    public DateTime? FechaFinalizacion { get; set; }
 
-    public double MontoTotal { get; set; }
+    public double? SubTotal { get; set; }
 
-    public int IdMetodoPago { get; set; }
+    public double? Descuento { get; set; }
 
-    public int NroPersonas { get; set; }
+    public double? Iva { get; set; }
 
-    public int IdEstadoReserva { get; set; }
+    public double? MontoTotal { get; set; }
+
+    public int? IdMetodoPago { get; set; }
+
+    public int? NroPersonas { get; set; }
+
+    public int? IdEstadoReserva { get; set; }
 
     public virtual ICollection<Abono> Abonos { get; set; } = new List<Abono>();
 
@@ -38,11 +37,11 @@ public partial class Reserva
 
     public virtual ICollection<DetalleReservaServicio> DetalleReservaServicios { get; set; } = new List<DetalleReservaServicio>();
 
-    public virtual EstadosReserva IdEstadoReservaNavigation { get; set; } = null!;
+    public virtual EstadosReserva? IdEstadoReservaNavigation { get; set; }
 
-    public virtual MetodoPago IdMetodoPagoNavigation { get; set; } = null!;
+    public virtual MetodoPago? IdMetodoPagoNavigation { get; set; }
 
-    public virtual Cliente NroDocumentoClienteNavigation { get; set; } = null!;
+    public virtual Cliente? NroDocumentoClienteNavigation { get; set; }
 
-    public virtual Usuario NroDocumentoUsuarioNavigation { get; set; } = null!;
+    public virtual Usuario? NroDocumentoUsuarioNavigation { get; set; }
 }

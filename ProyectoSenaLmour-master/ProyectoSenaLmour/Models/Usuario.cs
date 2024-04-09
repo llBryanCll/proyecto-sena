@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
 
 namespace ProyectoSenaLmour.Models;
 
@@ -8,31 +7,27 @@ public partial class Usuario
 {
     public int NroDocumento { get; set; }
 
-    public int IdTipoDocumento { get; set; }
+    public int? IdTipoDocumento { get; set; }
 
-    public string Nombres { get; set; } = null!;
+    public string? Nombres { get; set; }
 
-    public string Apellidos { get; set; } = null!;
+    public string? Apellidos { get; set; }
 
-    public string Celular { get; set; } = null!;
+    public string? Celular { get; set; }
 
-    public string Correo { get; set; } = null!;
+    public string? Correo { get; set; }
 
-    public string Contraseña { get; set; } = null!;
+    public string? Contraseña { get; set; }
 
-    public string Telefono { get; set; } = null!;
+    public string? Telefono { get; set; }
 
-    public string Direccion { get; set; } = null!;
+    public string? Direccion { get; set; }
 
-    public string Genero { get; set; } = null!;
+    public string? Genero { get; set; }
 
-    public string Estado { get; set; } = null!;
+    public string? Estado { get; set; }
 
     public int? IdRol { get; set; }
-
-    //por aca
-    
-    //aca
 
     public virtual Role? IdRolNavigation { get; set; }
 

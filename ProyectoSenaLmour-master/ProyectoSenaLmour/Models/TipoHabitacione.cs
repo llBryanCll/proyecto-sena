@@ -7,11 +7,11 @@ public partial class TipoHabitacione
 {
     public int IdTipoHabitacion { get; set; }
 
-    public string NomTipoHabitacion { get; set; } = null!;
+    public string? NomTipoHabitacion { get; set; }
 
-    public int NumeroPersonas { get; set; }
+    public int? NumeroPersonas { get; set; }
 
-    public string Estado { get; set; } = null!;
+    public string? Estado { get; set; }
 
     public virtual ICollection<Habitacione> Habitaciones { get; set; } = new List<Habitacione>();
 }

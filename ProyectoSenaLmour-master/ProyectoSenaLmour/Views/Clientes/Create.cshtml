@@ -8,7 +8,7 @@
 
 
 <h4>Crear Cliente</h4>
-<<div class="row">
+<div class="row">
     <div class="col-md-4">
         <form asp-action="Create" asp-controller="Clientes" method="post">
             <div class="form-group">
@@ -48,10 +48,6 @@
                 <input asp-for="Correo" class="form-control" />
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Clientes" method="post">
             <div class="form-group">
                 <label asp-for="Contraseña" class="control-label"></label>
                 <div class="input-group">
