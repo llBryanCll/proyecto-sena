@@ -59,9 +59,11 @@ namespace ProyectoSenaLmour.Controllers
 
         }
 
+
         [HttpPost]
         public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
+
             _context.Reservas.Add(oReservaVM.oReserva);
             _context.SaveChanges();
 
@@ -77,7 +79,7 @@ namespace ProyectoSenaLmour.Controllers
 
             return Json(new
             {
-                costo = CostoPaquete.Costo 
+                costo = CostoPaquete.Costo
             });
         }
 
@@ -94,100 +96,59 @@ namespace ProyectoSenaLmour.Controllers
         }
 
 
-
-        //// GET: Reservas
-        //public async Task<IActionResult> Index()
-        //{
-        //    var lmourContext = _context.Reservas.Include(r => r.IdEstadoReservaNavigation).Include(r => r.IdMetodoPagoNavigation).Include(r => r.NroDocumentoClienteNavigation).Include(r => r.NroDocumentoUsuarioNavigation);
-        //    return View(await lmourContext.ToListAsync());
-        //}
-
-        // GET: Reservas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Reservas/Detalle/
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Reservas == null)
-            {
-                return NotFound();
-            }
 
-            var reserva = await _context.Reservas
-                .Include(r => r.IdEstadoReservaNavigation)
-                .Include(r => r.IdMetodoPagoNavigation)
-                .Include(r => r.NroDocumentoClienteNavigation)
-                .Include(r => r.NroDocumentoUsuarioNavigation)
-                .FirstOrDefaultAsync(m => m.IdReserva == id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-
-            return View(reserva);
-        }
-
-        // GET: Reservas/Create
-        //public IActionResult Create()
-        //{
-        //    ViewBag.MetodoPago = _context.MetodoPagos.Select(metodoPago => new SelectListItem()
-        //    {
-        //        Text = metodoPago.NomMetodoPago,
-        //        Value = metodoPago.IdMetodoPago.ToString()
-        //    }).ToList();
-        //    ViewBag.IdEstadoReserva = _context.EstadosReservas.Select(estadoReserva => new SelectListItem()
-        //    {
-        //        Text = estadoReserva.NombreEstadoReserva,
-        //        Value = estadoReserva.IdEstadoReserva.ToString()
-        //    }).ToList();
-        //    return View();
-        //}
-
-        //// POST: Reservas/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("IdReserva,NroDocumentoCliente,NroDocumentoUsuario,FechaReserva,FechaInicio,FechaFinalizacion,SubTotal,Descuento,Iva,MontoTotal,IdMetodoPago,NroPersonas,IdEstadoReserva")] Reserva reserva)
-        //{
-        //    //if (ModelState.IsValid)
-        //    {
-        //        _context.Add(reserva);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["IdEstadoReserva"] = new SelectList(_context.EstadosReservas, "IdEstadoReserva", "IdEstadoReserva", reserva.IdEstadoReserva);
-        //    ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMetodoPago", "IdMetodoPago", reserva.IdMetodoPago);
-        //    ViewData["NroDocumentoCliente"] = new SelectList(_context.Clientes, "NroDocumento", "NroDocumento", reserva.NroDocumentoCliente);
-        //    ViewData["NroDocumentoUsuario"] = new SelectList(_context.Usuarios, "NroDocumento", "NroDocumento", reserva.NroDocumentoUsuario);
-        //    return View(reserva);
-        //}
-
-        // GET: Reservas/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null || _context.Reservas == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var reserva = await _context.Reservas.FindAsync(id);
-        //    if (reserva == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["IdEstadoReserva"] = new SelectList(_context.EstadosReservas, "IdEstadoReserva", "IdEstadoReserva", reserva.IdEstadoReserva);
-        //    ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMetodoPago", "IdMetodoPago", reserva.IdMetodoPago);
-        //    ViewData["NroDocumentoCliente"] = new SelectList(_context.Clientes, "NroDocumento", "NroDocumento", reserva.NroDocumentoCliente);
-        //    ViewData["NroDocumentoUsuario"] = new SelectList(_context.Usuarios, "NroDocumento", "NroDocumento", reserva.NroDocumentoUsuario);
-        //    return View(reserva);
-        //}
-        public IActionResult Edit()
-        {
             ReservaVM oReservaVM = new ReservaVM()
             {
                 oReserva = new Reserva(),
+
                 oListaEstados = _context.EstadosReservas.Select(reserva => new SelectListItem()
                 {
                     Text = reserva.NombreEstadoReserva,
                     Value = reserva.IdEstadoReserva.ToString()
+                }).ToList(),
+
+                oListaMetodosPago = _context.MetodoPagos.Select(mtp => new SelectListItem()
+                {
+                    Text = mtp.NomMetodoPago,
+                    Value = mtp.IdMetodoPago.ToString()
+                }).ToList(),
+            };
+
+            if (oReservaVM == null)
+            {
+                return NotFound();
+            }
+
+            return View(oReservaVM);
+        }
+
+
+        // GET: Reservas/Edit/5
+        public IActionResult Edit(int id)
+        {
+            // Buscar la reserva que se va a editar por su ID
+            var reservaEditar = _context.Reservas
+                .Include(r => r.IdEstadoReservaNavigation)
+                .Include(r => r.NroDocumentoClienteNavigation)
+                .FirstOrDefault(r => r.IdReserva == id);
+
+            if (reservaEditar == null)
+            {
+                return NotFound(); // Si no se encuentra la reserva, retornar un error 404
+            }
+
+            // Construir el ViewModel de Reserva para pasar a la vista
+            ReservaVM oReservaVM = new ReservaVM()
+            {
+                oReserva = reservaEditar,
+                oListaEstados = _context.EstadosReservas.Select(reserva => new SelectListItem()
+                {
+                    Text = reserva.NombreEstadoReserva,
+                    Value = reserva.IdEstadoReserva.ToString(),
+                    Selected = reserva.IdEstadoReserva == reservaEditar.IdEstadoReserva // Marcar como seleccionado el estado actual de la reserva
                 }).ToList(),
                 oListaMetodosPago = _context.MetodoPagos.Select(mtp => new SelectListItem()
                 {
@@ -205,122 +166,62 @@ namespace ProyectoSenaLmour.Controllers
             return View(oReservaVM);
         }
 
+        // POST: Reservas/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public IActionResult Edit(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
+        public IActionResult Edit(int id, ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
-            _context.Reservas.Add(oReservaVM.oReserva);
-            _context.SaveChanges();
+            if (id != oReservaVM.oReserva.IdReserva)
+            {
+                return NotFound(); // Si el ID de la reserva no coincide con el ID recibido, retornar un error 404
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Actualizar la reserva en el contexto y guardar los cambios
+                    _context.Update(oReservaVM.oReserva);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ReservaExists(oReservaVM.oReserva.IdReserva))
+                    {
+                        return NotFound(); // Si la reserva no existe, retornar un error 404
+                    }
+                    else
+                    {
+                        throw; // Si hay un error de concurrencia, lanzar una excepción
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            // Si llegamos aquí, significa que hubo un error en el modelo, volver a cargar la vista con los datos de la reserva
+            return View(oReservaVM);
+        }
+
+        // Método auxiliar para verificar si una reserva existe
+        private bool ReservaExists(int id)
+        {
+            return _context.Reservas.Any(e => e.IdReserva == id);
+        }
+
+
+        public IActionResult Anular(int id)
+        {
+            var reserva = _context.Reservas
+                .FirstOrDefault(m => m.IdReserva == id);
+
+            reserva.IdEstadoReserva = 5;
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult ObtenerCostoPaquete_2(int paqueteId)
-        {
-            var CostoPaquete = _context.Paquetes
-                .Where(p => p.IdPaquete == paqueteId)
-                .FirstOrDefault();
-
-            return Json(new
-            {
-                costo = CostoPaquete.Costo
-            });
-        }
-
-        public IActionResult ObtenerCostoServicio_2(int servicioId)
-        {
-            var CostoServicio = _context.Servicios
-                .Where(s => s.IdServicio == servicioId)
-                .FirstOrDefault();
-
-            return Json(new
-            {
-                costo = CostoServicio.Costo
-            });
-        }
-
-
-        // POST: Reservas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("IdReserva,NroDocumentoCliente,NroDocumentoUsuario,FechaReserva,FechaInicio,FechaFinalizacion,SubTotal,Descuento,Iva,MontoTotal,MetodoPago,NroPersonas,IdEstadoReserva")] Reserva reserva)
-        //{
-        //    if (id != reserva.IdReserva)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(reserva);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ReservaExists(reserva.IdReserva))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["IdEstadoReserva"] = new SelectList(_context.EstadosReservas, "IdEstadoReserva", "IdEstadoReserva", reserva.IdEstadoReserva);
-        //    ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMetodoPago", "IdMetodoPago", reserva.IdMetodoPago);
-        //    ViewData["NroDocumentoCliente"] = new SelectList(_context.Clientes, "NroDocumento", "NroDocumento", reserva.NroDocumentoCliente);
-        //    ViewData["NroDocumentoUsuario"] = new SelectList(_context.Usuarios, "NroDocumento", "NroDocumento", reserva.NroDocumentoUsuario);
-        //    return View(reserva);
-        //}
-
-        // GET: Reservas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Reservas == null)
-            {
-                return NotFound();
-            }
-
-            var reserva = await _context.Reservas
-                .Include(r => r.IdEstadoReservaNavigation)
-                .Include(r => r.IdMetodoPagoNavigation)
-                .Include(r => r.NroDocumentoClienteNavigation)
-                .Include(r => r.NroDocumentoUsuarioNavigation)
-                .FirstOrDefaultAsync(m => m.IdReserva == id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-
-            return View(reserva);
-        }
-
-        // POST: Reservas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Reservas == null)
-            {
-                return Problem("Entity set 'LmourContext.Reservas'  is null.");
-            }
-            var reserva = await _context.Reservas.FindAsync(id);
-            if (reserva != null)
-            {
-                _context.Reservas.Remove(reserva);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReservaExists(int id)
+        private bool ReservaExistsForAnular(int id)
         {
             return (_context.Reservas?.Any(e => e.IdReserva == id)).GetValueOrDefault();
         }
