@@ -145,39 +145,7 @@ namespace ProyectoSenaLmour.Controllers
         // POST: Paquetes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdPaquete,NomPaquete,Costo,IdHabitacion,Estado,Descripcion")] Paquete paquete)
-        {
-            if (id != paquete.IdPaquete)
-            {
-                return NotFound();
-            }
-
-            //if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Entry(paquete).State = EntityState.Modified; ;
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PaqueteExists(paquete.IdPaquete))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdHabitacion"] = new SelectList(_context.Habitaciones, "IdHabitacion", "IdHabitacion", paquete.IdHabitacion);
-            return View(paquete);
-
-        }
+       
 
         // GET: Paquetes/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -222,6 +190,98 @@ namespace ProyectoSenaLmour.Controllers
         {
             return (_context.Paquetes?.Any(e => e.IdPaquete == id)).GetValueOrDefault();
         }
+
+        // GET: Paquetes/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var paquete = await _context.Paquetes
+                .Include(p => p.PaqueteServicios)
+                .FirstOrDefaultAsync(m => m.IdPaquete == id);
+
+            if (paquete == null)
+            {
+                return NotFound();
+            }
+
+            // Cargar explícitamente las propiedades de navegación de PaqueteServicio si no se cargaron anteriormente
+            foreach (var paqueteServicio in paquete.PaqueteServicios)
+            {
+                if (paqueteServicio.IdServicioNavigation == null)
+                {
+                    _context.Entry(paqueteServicio).Reference(ps => ps.IdServicioNavigation).Load();
+                }
+            }
+
+            // Cargar las listas necesarias para mostrar en el formulario de edición, por ejemplo, las habitaciones y servicios disponibles
+            var habitaciones = _context.Habitaciones.Select(mtp => new SelectListItem()
+            {
+                Text = mtp.Nombre,
+                Value = mtp.IdHabitacion.ToString()
+            }).ToList();
+
+            ViewBag.Habitaciones = habitaciones;
+
+            var servicios = _context.Servicios.ToList();
+            ViewBag.Servicios = servicios;
+
+            return View(paquete);
+        }
+
+        // POST: Paquetes/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("IdPaquete,NomPaquete,Costo,IdHabitacion,Estado,Descripcion")] Paquete paquete, List<int> ServiciosSeleccionados)
+        {
+            if (id != paquete.IdPaquete)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(paquete);
+                    await _context.SaveChangesAsync();
+
+                    // Eliminar los servicios asociados anteriores
+                    var serviciosAnteriores = _context.PaqueteServicios.Where(ps => ps.IdPaquete == paquete.IdPaquete);
+                    _context.PaqueteServicios.RemoveRange(serviciosAnteriores);
+                    await _context.SaveChangesAsync();
+
+                    // Guardar los nuevos servicios asociados al paquete
+                    foreach (var servicioId in ServiciosSeleccionados)
+                    {
+                        PaqueteServicio paqueteServicio = new PaqueteServicio
+                        {
+                            IdPaquete = paquete.IdPaquete,
+                            IdServicio = servicioId
+                        };
+                        _context.PaqueteServicios.Add(paqueteServicio);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PaqueteExists(paquete.IdPaquete))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(paquete);
+        }
+
     }
 }
 
