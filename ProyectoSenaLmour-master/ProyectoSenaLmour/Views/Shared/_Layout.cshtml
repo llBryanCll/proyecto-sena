@@ -51,23 +51,29 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link" href="index.html" >
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i> </div>
-                                Dashboard
-                                                               
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <a class="nav-link" href="index.html" >
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">
+
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i> </div>
+                                    Dashboard
+
+                                </a>
                             </a>
-                        </a>
+                        }
 
 
-                        @if (User.IsInRole("administrador")) {  
+                        @if (User.IsInRole("Administrador"))
+                        {
                         <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-user-group"></i> </div> 
                             Roles
                         </a>
                         }
 
-                        @if (User.IsInRole("administrador")) { 
+                        @if (User.IsInRole("Administrador"))
+                        {
                         <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i> </div> 
                             Usuarios
@@ -100,41 +106,49 @@
 
                                 </nav>
                             </div>
-                           
+
+
+
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Paquetes" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i> </div> 
+                            Paquetes
+                        </a>}
 
                         
-                        <a class="nav-link" asp-area="" asp-controller="Paquetes" asp-action="Index">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i> </div> 
-                            Paquetes
-                        </a>
-
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-users-gear"></i></div> 
                             Servicios
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+
+                        
                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
 
                                 <a class="nav-link" asp-area="" asp-controller="Servicios" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear"></i> </div>
                                     Servicios
-                                </a> 
+                                </a>
 
+                                
                                 <a class="nav-link" asp-area="" asp-controller="TipoServicios" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-user-gear"></i> </div>
                                     Tipo de servicio
-                                </a>
+                                </a> 
 
                             </nav>
                         </div>
 
-                        <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i> </div>
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i> </div>
                             Reserva
-                        </a> 
+                        </a> }
 
-                        @if (User.IsInRole("administrador"))
+                        @if (User.IsInRole("Administrador"))
                         {
 
                             <a class="nav-link" asp-area="" asp-controller="Abonos" asp-action="Index">

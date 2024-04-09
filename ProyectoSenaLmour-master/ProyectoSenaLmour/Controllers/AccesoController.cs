@@ -16,7 +16,15 @@ namespace ProyectoSenaLmour.Controllers
 {
 	public class AccesoController : Controller
 	{
-		public IActionResult Index()
+
+        private readonly LmourContext _context;
+
+        public AccesoController(LmourContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
 		{
 			return View();
 
@@ -25,22 +33,16 @@ namespace ProyectoSenaLmour.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Index(UsuarioF _usuarioF)
 		{
-			Da_logica _da_usuarioF = new Da_logica();
 
-			var usuarioF = _da_usuarioF.ValidarUsuarioF(_usuarioF.Correo, _usuarioF.Contraseña);
+			var usuarioF = ValidarUsuarioF(_usuarioF.Correo, _usuarioF.Contraseña);
 
 			if (usuarioF != null)
 			{
 				var claims = new List<Claim> {
-				 new Claim(ClaimTypes.Name, usuarioF.Nombre),
-				 new Claim("Correo", usuarioF.Correo)
-				 };
-
-
-				foreach (string rol in usuarioF.Roles)
-				{
-					claims.Add(new Claim(ClaimTypes.Role, rol));
-				}
+				 new Claim(ClaimTypes.Name, usuarioF.Nombres),
+				 new Claim("Correo", usuarioF.Correo),
+                 new Claim(ClaimTypes.Role, usuarioF.IdRolNavigation.NomRol),
+            };
 
 				var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -82,12 +84,18 @@ namespace ProyectoSenaLmour.Controllers
 			return View("~/Views/Acceso/Recuperar.cshtml");
 		}
 
+        public Usuario ValidarUsuarioF(string _correo, string _contraseña)
+        {
+            return _context.Usuarios
+				.Where(item => item.Correo == _correo && item.Contraseña == _contraseña)
+				.Include(u => u.IdRolNavigation)
+				.FirstOrDefault();
+        }
 
 
 
 
-
-	}
+    }
 
 
 
