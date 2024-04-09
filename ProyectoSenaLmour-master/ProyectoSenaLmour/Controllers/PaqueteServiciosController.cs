@@ -28,22 +28,25 @@ namespace ProyectoSenaLmour.Controllers
         // GET: PaqueteServicios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.PaqueteServicios == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var paqueteServicio = await _context.PaqueteServicios
-                .Include(p => p.IdPaqueteNavigation)
-                .Include(p => p.IdServicioNavigation)
-                .FirstOrDefaultAsync(m => m.IdPaqueteServicio == id);
-            if (paqueteServicio == null)
+            var paquete = await _context.Paquetes
+                .Include(p => p.IdHabitacionNavigation)
+                .Include(p => p.PaqueteServicios)
+                    .ThenInclude(ps => ps.IdServicioNavigation) // Cargar los servicios asociados al paquete
+                .FirstOrDefaultAsync(m => m.IdPaquete == id);
+
+            if (paquete == null)
             {
                 return NotFound();
             }
 
-            return View(paqueteServicio);
+            return View(paquete);
         }
+
 
         // GET: PaqueteServicios/Create
         public IActionResult Create()
@@ -74,7 +77,7 @@ namespace ProyectoSenaLmour.Controllers
         // GET: PaqueteServicios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.PaqueteServicios == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -129,7 +132,7 @@ namespace ProyectoSenaLmour.Controllers
         // GET: PaqueteServicios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.PaqueteServicios == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -151,23 +154,15 @@ namespace ProyectoSenaLmour.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.PaqueteServicios == null)
-            {
-                return Problem("Entity set 'LmourContext.PaqueteServicios'  is null.");
-            }
             var paqueteServicio = await _context.PaqueteServicios.FindAsync(id);
-            if (paqueteServicio != null)
-            {
-                _context.PaqueteServicios.Remove(paqueteServicio);
-            }
-            
+            _context.PaqueteServicios.Remove(paqueteServicio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PaqueteServicioExists(int id)
         {
-          return (_context.PaqueteServicios?.Any(e => e.IdPaqueteServicio == id)).GetValueOrDefault();
+            return _context.PaqueteServicios.Any(e => e.IdPaqueteServicio == id);
         }
     }
 }
