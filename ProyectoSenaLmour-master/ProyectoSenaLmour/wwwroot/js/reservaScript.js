@@ -12,8 +12,42 @@ var fechaHoy = formato.replace(/dd|mm|yyyy/gi, matched => map[matched]);
 $('#fechaHoy').val(fechaHoy);
 
 $(function () {
-    $("#fechaInicio").datepicker();
-    $("#fechaFinalizacion").datepicker();
+    $("#fechaIngreso").datepicker();
+    $("#fechaSalida").datepicker();
+});
+
+$(function () {
+    // Inicializa el Datepicker para la fecha de ingreso
+    $("#fechaIngreso").datepicker({
+        minDate: 0, // Establece la fecha mínima como la fecha actual
+        dateFormat: "yy-mm-dd", // Formato de fecha
+        onSelect: function (selectedDate) {
+            var minDate = new Date(selectedDate); // Fecha de ingreso seleccionada
+            var today = new Date(); // Fecha actual
+            // Comprueba si la fecha de ingreso seleccionada es anterior a la fecha actual
+            if (minDate < today) {
+                // Establece la fecha de ingreso seleccionada como la fecha actual
+                $(this).datepicker("setDate", today);
+            }
+            // Establece la fecha mínima de salida como la fecha de ingreso seleccionada
+            $("#fechaSalida").datepicker("option", "minDate", minDate);
+        }
+    });
+
+    // Inicializa el Datepicker para la fecha de salida
+    $("#fechaSalida").datepicker({
+        minDate: 0, // Establece la fecha mínima como la fecha actual
+        dateFormat: "yy-mm-dd", // Formato de fecha
+        onSelect: function (selectedDate) {
+            var maxDate = new Date(selectedDate); // Fecha de salida seleccionada
+            var minDate = $("#fechaIngreso").datepicker("getDate"); // Fecha de ingreso seleccionada
+            // Comprueba si la fecha de salida seleccionada es anterior a la fecha de ingreso
+            if (maxDate < minDate) {
+                // Establece la fecha de salida seleccionada como la fecha de ingreso seleccionada
+                $(this).datepicker("setDate", minDate);
+            }
+        }
+    });
 });
 
 var paqueteSeleccionado = [];

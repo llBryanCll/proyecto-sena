@@ -5,135 +5,140 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Editar Reserva</h4>
+<h1>Editar reserva</h1>
+
+<h4></h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<form asp-action="Edit" asp-controller="Reservas" method="post">
+    <div class="row">
+        <div class="col-md-4">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group">
-            <label class="control-label">Identificación Cliente</label>
-            <input class="form-control" asp-items="ViewBag.DocumentoCliente" asp-for="oReserva.NroDocumentoCliente"></input>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Identificación Usuario</label>
-            <input class="form-control" asp-items="ViewBag.DocumentoUsuario" asp-for="oReserva.NroDocumentoUsuario"></input>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Fecha Reserva</label>
-            <input id="fechaHoy" asp-for="oReserva.FechaReserva" type="text" class="form-control" />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label" readonly>Fecha Inicio</label>
-            <input type="date" class="form-control" asp-for="oReserva.FechaInicio" />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Fecha FInalizacion</label>
-            <input type="date" class="form-control" asp-for="oReserva.FechaFinalizacion" />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Número de Personas</label>
-            <input type="number" class="form-control" asp-for="oReserva.NroPersonas" />
-            <span class="text-danger"></span>
+            <div class="form-group">
+                <label class="control-label">Identificación Cliente</label>
+                <input class="form-control" asp-items="ViewBag.DocumentoCliente" asp-for="oReserva.NroDocumentoCliente"></input>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Identificación Usuario</label>
+                <input class="form-control" asp-items="ViewBag.DocumentoUsuario" asp-for="oReserva.NroDocumentoUsuario"></input>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Fecha Reserva</label>
+                <input asp-for="oReserva.FechaReserva" type="text" class="form-control" />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Fecha Ingreso</label>
+                <input type="date" id="fechaIngreso" class="form-control" />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Fecha Salida</label>
+                <input type="date" id="fechaSalida" class="form-control" />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Número de Personas</label>
+                <input type="number" class="form-control" asp-for="oReserva.NroPersonas" />
+                <span class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label class="control-label">Sub Total</label>
-            <input class="form-control" asp-for="oReserva.SubTotal" id="inputSubTotal" readonly />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Descuento</label>
-            <input class="form-control" asp-for="oReserva.Descuento" id="inputDescuento" oninput="formatoDescuento(this)" onkeyup="actualizarInfoCosto()" />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Iva</label>
-            <input class="form-control" asp-for="oReserva.Iva" id="inputIva" readonly />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Total</label>
-            <input class="form-control" asp-for="oReserva.MontoTotal" id="inputTotal" readonly />
-            <span class="text-danger"></span>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Metodo Pago</label>
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdMetodoPago" asp-items="Model.oListaMetodosPago">
-                <option selected disabled>  Selecciona  </option>
-            </select>
-        </div><br>
-        <div class="form-group">
-            <label class="control-label">Estado Reserva</label>
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdEstadoReserva" asp-items="Model.oListaEstados">
-                <option selected disabled>  Selecciona  </option>
-            </select>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Sub Total</label>
+                <input class="form-control" asp-for="oReserva.SubTotal" id="inputSubTotal" readonly />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Descuento</label>
+                <input class="form-control" asp-for="oReserva.Descuento" id="inputDescuento" oninput="formatoDescuento(this)" onkeyup="actualizarInfoCosto()" />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Iva</label>
+                <input class="form-control" asp-for="oReserva.Iva" id="inputIva" readonly />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Total</label>
+                <input class="form-control" asp-for="oReserva.MontoTotal" id="inputTotal" readonly />
+                <span class="text-danger"></span>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Metodo Pago</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdMetodoPago" asp-items="Model.oListaMetodosPago">
+                    <option selected disabled>  Selecciona  </option>
+                </select>
+            </div><br>
+            <div class="form-group">
+                <label class="control-label">Estado Reserva</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" class="form-control" asp-for="oReserva.IdEstadoReserva" asp-items="Model.oListaEstados">
+                    <option selected disabled>  Selecciona  </option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="form-group">
+        <div class="col-md-4">
+            <div class="form-group">
 
-            <label>Paquetes disponibles</label>
-            <select class="form-select form-select-sm" id="selectPaquete" aria-label=".form-select-sm example">
-                <option selected disabled>  Selecciona  </option>
-                @foreach (var paquete in ViewBag.Paquetes)
-                {
-                    <option value="@paquete.IdPaquete">@paquete.NomPaquete</option>
-                }
-            </select>
+                <label>Paquetes disponibles</label>
+                <select class="form-select form-select-sm" id="selectPaquete" aria-label=".form-select-sm example">
+                    <option selected disabled>  Selecciona  </option>
+                    @foreach (var paquete in ViewBag.Paquetes)
+                    {
+                        <option value="@paquete.IdPaquete">@paquete.NomPaquete</option>
+                    }
+                </select>
 
-            <br />
+                <br />
 
-            <input class="form-control" id="inputCostoPaquete" readonly />
+                <input class="form-control" id="inputCostoPaquete" readonly />
 
-            <input type="hidden" id="paqueteSeleccionado" name="paqueteSeleccionado" />
+                <input type="hidden" id="paqueteSeleccionado" name="paqueteSeleccionado" />
 
-            <br /><br />
+                <br /><br />
 
-            <a class="btn btn-success" id="btnAgregarServicio">Agregar servicios</a>
-            <br /><br />
+                <a class="btn btn-success" id="btnAgregarServicio">Agregar servicios</a>
+                <br /><br />
 
-            <select class="form-select form-select-sm" id="selectServicios" aria-label=".form-select-sm example">
-                <option selected disabled>  Selecciona  </option>
-                @foreach (var servicio in ViewBag.Servicios)
-                {
-                    <option value="@servicio.IdServicio">@servicio.NomServicio</option>
-                }
-            </select>
+                <select class="form-select form-select-sm" id="selectServicios" aria-label=".form-select-sm example">
+                    <option selected disabled>  Selecciona  </option>
+                    @foreach (var servicio in ViewBag.Servicios)
+                    {
+                        <option value="@servicio.IdServicio">@servicio.NomServicio</option>
+                    }
+                </select>
 
-            <input type="hidden" class="form-control" id="inputCostoServicio" />
+                <input type="hidden" class="form-control" id="inputCostoServicio" />
 
-            <br />
+                <br />
 
-            <div class="card">
+                <div class="card">
 
-                <div class="card-header">
-                    <label class="form-label">Servicios Asignados</label>
-                </div>
+                    <div class="card-header">
+                        <label class="form-label">Servicios Asignados</label>
+                    </div>
 
-                <div class="card-body">
+                    <div class="card-body">
 
-                    <table id="tablaServiciosSeleccionados" class="table table-striped table-bordered table-hover table-servicios">
+                        <table id="tablaServiciosSeleccionados" class="table table-striped table-bordered table-hover table-servicios">
 
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Costo</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Costo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
 
-                        <input type="hidden" id="serviciosSeleccionados" name="serviciosSeleccionados" />
+                            <input type="hidden" id="serviciosSeleccionados" name="serviciosSeleccionados" />
 
-                    </table>
+                        </table>
+
+                    </div>
 
                 </div>
 
@@ -142,26 +147,22 @@
         </div>
 
     </div>
-</div>
-<br>
 
-<div class="form-group">
-    <input type="submit" value="Guardar" class="btn_guardar" />
-</div>
+    <br>
 
-<div class="separador">
-    <label>|</label>
-</div>
-
-<div>
-    <a asp-action="Index" class="btn_volver">Volver</a>
-</div>
+    <div class="form-group">
+        <input type="submit" value="Guardar" class="btn_guardar" />
+        <div class="separador">
+            <label>|</label>
+        </div>
+        <a asp-action="Index" class="btn_volver">Volver</a>
+    </div>
+</form>
 
 @section Scripts {
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="~/js/reservascript.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
     <style>
