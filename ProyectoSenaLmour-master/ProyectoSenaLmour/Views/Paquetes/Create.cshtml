@@ -38,7 +38,7 @@
                 <input asp-for="oPaquete.Costo" class="form-control" />
                 <span class="text-danger"></span>
             </div>
-
+            
             <br />
 
             <div class="form-group">
@@ -96,6 +96,8 @@
 
                         <input type="hidden" id="serviciosSeleccionados" name="serviciosSeleccionados" asp-for="ServiciosSeleccionados" />
 
+                        
+
                     </table>
                 </div>
             </div>
@@ -114,28 +116,29 @@
     <script src="~/js/paquetescript.js"></script>
 }
 
-        <style>
+<style>
 
-            .btn_crear {
-                cursor: pointer;
-                top: 390px;
-                position: absolute;
-            }
+    .btn_crear {
+        cursor: pointer;
+        top: 390px;
+        position: absolute;
+    }
 
-            .btn_volver {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 2px solid #000;
-                border-radius: 10px;
-                padding: 5px 5px;
-                width: 80px;
-                background-color: #393d3f;
-                color: white;
-                cursor: pointer;
-                top: 390px;
-                position: absolute;
-                right: 75%;
-            }
+    .btn_volver {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 5px 5px;
+        width: 80px;
+        background-color: #393d3f;
+        color: white;
+        cursor: pointer;
+        top: 390px;
+        position: absolute;
+        right: 75%;
+    }
 
-        </style>
+</style>
+

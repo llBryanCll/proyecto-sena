@@ -73,3 +73,45 @@ function calcularCostosServicio() {
 
     return total;
 }
+
+$('#selectHabitacion').change(function () {
+    var selectedHabitacionId = $(this).val();
+
+    $.ajax({
+        url: '/Reservas/ObtenerCostoHabitacion',
+        type: 'GET',
+        data: { habitacionId: selectedHabitacionId },
+        dataType: 'json',
+        success: function (data) {
+            $('#inputCostoHabitacion').val(data.costo);
+            actualizarInfoCosto();
+        },
+        error: function () {
+            console.error('Error al obtener el costo de la habitación.');
+        }
+    });
+});
+
+$('#selectServicio').change(function () {
+    var selectedServicioId = $(this).val();
+
+    $.ajax({
+        url: '/Reservas/ObtenerCostoServicio',
+        type: 'GET',
+        data: { servicioId: selectedServicioId },
+        dataType: 'json',
+        success: function (data) {
+            $('#inputCostoServicio').val(data.costo);
+            actualizarInfoCosto();
+        },
+        error: function () {
+            console.error('Error al obtener el costo del servicio.');
+        }
+    });
+});
+
+// Dentro del evento para eliminar servicios
+$(document).on("click", ".btn-eliminar-servicio", function () {
+    $(this).closest("tr").remove();
+    calcularCostoTotal();
+});
