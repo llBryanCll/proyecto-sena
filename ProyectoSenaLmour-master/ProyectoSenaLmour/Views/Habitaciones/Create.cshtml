@@ -7,60 +7,69 @@
 
 
 
-<h4>Crear Habitación</h4>
+<h1>Crear habitación</h1>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
-       <form asp-action="Create" asp-controller="Habitaciones">
+<form asp-action="Create" asp-controller="Habitaciones">
+    <div class="row">
+        <div class="col-md-4">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             @* <div class="form-group">
-                <label asp-for="IdHabitacion" class="control-label"></label>
-                <input asp-for="IdHabitacion" class="form-control" />
-                <span asp-validation-for="IdHabitacion" class="text-danger"></span>
-            </div>  *@
-            <div class="form-group">
-                <label asp-for="IdTipoHabitacion" class="control-label"></label>
-                <select asp-for="IdTipoHabitacion" class="form-control">
-                    <option value="">Seleccione un tipo de Habitacion</option>
-                    <option value="1">Individual</option>
-                    <option value="2">Doble</option>
-                    <option value="3">Triple</option>
-                    <option value="4">Cuadruple </option>
-                </select>
-                <span asp-validation-for="IdTipoHabitacion" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+
+            <br />
+
+            <div class="form-group">
+                <label asp-for="IdTipoHabitacionNavigation.NomTipoHabitacion" class="control-label"></label>
+                <select asp-for="IdTipoHabitacion" class="form-control" asp-items="ViewBag.IdTipoHabitacion"></select>
+                <option selected disabled>  Selecciona  </option>
+            </div>
+
+            <br />
+
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
-                    <option value="">Seleccionar estado</option>
+                <select asp-for="Estado" class="form-control">
+                    <option selected disabled>  Selecciona  </option>
+                    <option>  Activo  </option>
+                    <option>  Inactivo  </option>
                 </select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
+
+            <br />
+
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
+                <textarea asp-for="Descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
+
+            <br />
+
             <div class="form-group">
                 <label asp-for="Costo" class="control-label"></label>
-                <input asp-for="Costo" class="form-control" />
+                <input asp-for="Costo" class="form-control" placeholder="$" />
                 <span asp-validation-for="Costo" class="text-danger"></span>
             </div>
-            <div class="btn_crear">
-                <input type="submit" value="Crear Habitacion" class="btn btn-primary" />
-            </div>
-            <div class="btn_volver">
-                <a asp-action="Index">Volver</a>
-            </div>
-        </form>
+        </div>
     </div>
 
-   
+    <br />
+
+    <div class="btn_crear">
+        <input type="submit" value="Crear Habitacion" class="btn btn-primary" />
+    </div>
+    <div class="btn_volver">
+        <a asp-action="Index">Volver</a>
+    </div>
+</form>
+    </div>
+
 
         @section Scripts {
         }
@@ -72,7 +81,7 @@
 
             .btn_crear {
                 cursor: pointer;
-                top: 390px;
+                top: 570px;
                 position: absolute;
             }
 
@@ -87,8 +96,8 @@
                 background-color: #393d3f;
                 color: white;
                 cursor: pointer;
-                top: 390px;
+                top: 570px;
                 position: absolute;
-                right: 72%;
+                right: 65%;
             }
         </style>

@@ -68,17 +68,27 @@ namespace ProyectoSenaLmour.Controllers
         // GET: TipoHabitaciones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TipoHabitaciones == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoHabitacione = await _context.TipoHabitaciones.FindAsync(id);
-            if (tipoHabitacione == null)
+            var tipoHabitacion = await _context.TipoHabitaciones.FindAsync(id);
+            if (tipoHabitacion == null)
             {
                 return NotFound();
             }
-            return View(tipoHabitacione);
+
+            // Obtener la lista de nombres de tipos de habitaciones existentes
+            var nombresTiposHabitacionesExistentes = await _context.TipoHabitaciones
+                .Where(th => th.IdTipoHabitacion != id) // Excluir el tipo de habitación actual
+                .Select(th => th.NomTipoHabitacion)
+                .ToListAsync();
+
+            // Crear una lista desplegable con los nombres de tipos de habitaciones existentes
+            ViewData["NomTipoHabitacion"] = new SelectList(nombresTiposHabitacionesExistentes, tipoHabitacion.NomTipoHabitacion);
+            ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
+            return View(tipoHabitacion);
         }
 
         // POST: TipoHabitaciones/Edit/5

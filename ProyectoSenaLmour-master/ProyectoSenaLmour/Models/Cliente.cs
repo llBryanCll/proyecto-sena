@@ -11,7 +11,7 @@ public partial class Cliente
 
     public string Nombres { get; set; } = null!;
 
-    public string Apellidos { get; set; } = null!;
+    public string? Apellidos { get; set; } = null!;
 
     public string Celular { get; set; } = null!;
 

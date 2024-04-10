@@ -21,11 +21,11 @@ namespace ProyectoSenaLmour.Controllers
         // GET: Servicios
         public async Task<IActionResult> Index()
         {
-            var lmourContext = _context.Servicios.Include(s => s.IdTipoServicioNavigation);
-            return View(await lmourContext.ToListAsync());
+            var LmourContext = _context.Servicios.Include(h => h.IdTipoServicioNavigation);
+            return View(await LmourContext.ToListAsync());
         }
 
-        // GET: Servicios/Details/5
+        // GET: Habitaciones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Servicios == null)
@@ -34,7 +34,7 @@ namespace ProyectoSenaLmour.Controllers
             }
 
             var servicio = await _context.Servicios
-                .Include(s => s.IdTipoServicioNavigation)
+                .Include(h => h.IdTipoServicioNavigation)
                 .FirstOrDefaultAsync(m => m.IdServicio == id);
             if (servicio == null)
             {
@@ -47,25 +47,29 @@ namespace ProyectoSenaLmour.Controllers
         // GET: Servicios/Create
         public IActionResult Create()
         {
-            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "IdTipoServicio");
+            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "NombreTipoServicio");
             ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
             return View();
         }
 
-        // POST: Servicios/Create
+        // POST: Habitaciones/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdServicio,IdTipoServicio,NomServicio,Costo,Descripcion,Estado")] Servicio servicio)
+        public async Task<IActionResult> Create([Bind("Idservicio,IdTipoServicio,NomServicio,IdTipoServicio,Estado,Descripcion,Costo")] Servicio servicio)
         {
             //if (ModelState.IsValid)
-            {
-                _context.Add(servicio);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "IdTipoServicio", servicio.IdTipoServicio);
+            //{
+            //    _context.Add(habitacione);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            _context.Add(servicio);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "NombreTipoServicio", servicio.IdTipoServicio);
             return View(servicio);
         }
 
@@ -82,7 +86,15 @@ namespace ProyectoSenaLmour.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "IdTipoServicio", servicio.IdTipoServicio);
+
+            var nombresExistentes = await _context.Servicios
+                .Where(h => h.IdServicio != id) // Excluir la habitación actual
+                .Select(h => h.NomServicio)
+                .ToListAsync();
+
+            ViewData["NomServicio"] = new SelectList(nombresExistentes, Servicio.Equals);
+            ViewData["IdTipoServicio"] = new SelectList(_context.TipoServicios, "IdTipoServicio", "NombreTipoServicio");
+            ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
             return View(servicio);
         }
 
