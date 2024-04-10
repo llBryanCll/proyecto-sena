@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Crear reserva</h1>
+<br>
+
+<h1>Crear Reserva</h1>
 
 <h4></h4>
 <hr />
@@ -30,8 +32,7 @@
             </div><br>
             <div class="form-group">
                 <label class="control-label">Fecha de Ingreso</label>
-                <input id="fechaIngreso" asp-for="oReserva.FechaInicio" type="date" class="form-control" />
-                @* <input type="date" id="fechaIngreso" class="form-control" /> *@
+                <input type="date" id="fechaIngreso" class="form-control" />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
@@ -63,7 +64,7 @@
             </div><br>
             <div class="form-group">
                 <label  class="control-label">Monto Total</label>
-                <input class="form-control" asp-for="oReserva.MontoTotal" id="inputTotal" readonly />
+                <input class="form-control" asp-for="oReserva.MontoTotal" id="inputMontoTotal" readonly />
                 <span class="text-danger"></span>
             </div><br>
             <div class="form-group">
@@ -159,6 +160,8 @@
         <a asp-action="Index" class="btn_volver">Volver</a>
     </div>
 </form>
+<br>
+<br>
 
 @section Scripts {
 
@@ -171,7 +174,7 @@
 
         .btn_crear {
             cursor: pointer;
-            top: 593px;
+            top: 620px;
             position: absolute;
             border: 2px solid #000;
             border-radius: 10px;
@@ -186,6 +189,7 @@
             position: absolute;
             display: flex;
             right: 77%;
+            top: 625px;
         }
 
         .btn_volver {
@@ -199,7 +203,7 @@
             background-color: #393d3f;
             color: white;
             cursor: pointer;
-            top: 593px;
+            top: 620px;
             position: absolute;
             right: 71%;
         }

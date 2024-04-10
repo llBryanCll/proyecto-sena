@@ -17,31 +17,49 @@ $(function () {
 });
 
 $(function () {
-    $("#fechaIngreso").datepicker({
-        minDate: 0,
-        dateFormat: "yy-mm-dd",
-        onSelect: function (selectedDate) {
-            var minDate = new Date(selectedDate);
-            var today = new Date();
-            if (minDate < today) {
-                $(this).datepicker("setDate", today);
-            }
-            $("#fechaSalida").datepicker("option", "minDate", minDate);
+    // Función para formatear la fecha en formato ISO (yyyy-mm-dd)
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    // Función para obtener la fecha actual en formato ISO
+    function getCurrentDate() {
+        var today = new Date();
+        return formatDate(today);
+    }
+
+    // Inicializa el Datepicker para la fecha de ingreso
+    $("#fechaIngreso").change(function () {
+        var selectedDate = $(this).val();
+        var minDate = new Date(selectedDate);
+        var today = new Date();
+        if (minDate < today) {
+            $(this).val(getCurrentDate());
         }
+        $("#fechaSalida").attr("min", selectedDate);
     });
 
-    $("#fechaSalida").datepicker({
-        minDate: 0,
-        dateFormat: "yy-mm-dd",
-        onSelect: function (selectedDate) {
-            var maxDate = new Date(selectedDate);
-            var minDate = $("#fechaIngreso").datepicker("getDate");
-            if (maxDate < minDate) {
-                $(this).datepicker("setDate", minDate);
-            }
+    // Inicializa el Datepicker para la fecha de salida
+    $("#fechaSalida").change(function () {
+        var maxDate = new Date($(this).val());
+        var minDate = new Date($("#fechaIngreso").val());
+        if (maxDate < minDate) {
+            $(this).val($("#fechaIngreso").val());
         }
     });
 });
+
+
 
 var paqueteSeleccionado = [];
 var serviciosSeleccionados = [];
