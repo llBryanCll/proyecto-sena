@@ -212,5 +212,21 @@ namespace ProyectoSenaLmour.Controllers
         }
     }
 
-   
+    public static class EstadoHelper
+    {
+        public static string MostrarEstado(bool estado)
+        {
+            if (estado)
+            {
+                return "Activado";
+            }
+            else
+            {
+                return "Inactivado";
+            }
+        }
+    }
+
+
+
 }
