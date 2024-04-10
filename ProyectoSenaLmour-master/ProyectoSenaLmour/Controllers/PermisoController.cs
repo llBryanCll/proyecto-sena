@@ -19,6 +19,37 @@ namespace ProyectoSenaLmour.Controllers
         }
 
 
+        public class PermisosController : Controller
+        {
+            // Método para cargar los permisos del usuario
+            public IActionResult Index()
+            {
+                // Aquí cargarías los permisos del usuario desde la base de datos y los pasarías a la vista
+                IEnumerable<Permiso> permisos = ObtenerPermisosUsuario(); // Implementa este método según tu lógica
+                return View(permisos);
+            }
+
+            private IEnumerable<Permiso> ObtenerPermisosUsuario()
+            {
+                throw new NotImplementedException();
+            }
+
+            // Método para guardar los cambios en los permisos
+            [HttpPost]
+            public IActionResult GuardarCambios(IEnumerable<Permiso> permisos)
+            {
+                // Aquí guardarías los cambios en la base de datos
+                GuardarPermisosUsuario(permisos); // Implementa este método según tu lógica
+                return RedirectToAction("Index");
+            }
+
+            private void GuardarPermisosUsuario(IEnumerable<Permiso> permisos)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
 
 
 

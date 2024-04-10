@@ -5,6 +5,8 @@ using System.Diagnostics;
 
 namespace ProyectoSenaLmour.Controllers
 {
+
+   
     public class HomeController : Controller
     {
         private readonly LmourContext _context;
