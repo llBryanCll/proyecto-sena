@@ -5,23 +5,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<br>
+
+<h1>Detalles de Reserva</h1>
 
 <div>
-    <h4>Reserva</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NroDocumentoClienteNavigation)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NroDocumentoClienteNavigation.NroDocumento)
+            @Html.DisplayFor(model => model.NroDocumentoClienteNavigation.Nombres)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NroDocumentoUsuarioNavigation)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NroDocumentoUsuarioNavigation.NroDocumento)
+            @Html.DisplayFor(model => model.NroDocumentoUsuarioNavigation.Nombres)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FechaReserva)
@@ -75,57 +76,13 @@
             @Html.DisplayNameFor(model => model.IdEstadoReservaNavigation)
         </dt>
         <dd class="col-sm-10">
-            @{
-                switch (Model.IdEstadoReservaNavigation.IdEstadoReserva)
-                {
-                    case 1:
-                        <span>Reservado</span>
-                        break;
-                    case 2:
-                        <span>Por confirmar</span>
-                        break;
-                    case 3:
-                        <span>Confirmado</span>
-                        break;
-                    case 4:
-                        <span>En ejecución</span>
-                        break;
-                    case 5:
-                        <span>Anulado</span>
-                        break;
-                    case 6:
-                        <span>Cancelado</span>
-                        break;
-                    default:
-                        <span>Estado desconocido</span>
-                    break;
-                }
-            }
+            @Html.DisplayFor(model => model.IdEstadoReservaNavigation.NombreEstadoReserva)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdMetodoPagoNavigation)
         </dt>
         <dd class="col-sm-10">
-            @{
-                switch (Model.IdMetodoPagoNavigation.IdMetodoPago)
-                {
-                    case 1:
-                        <span>Transferencia</span>
-                        break;
-                    case 2:
-                        <span>Efectivo</span>
-                        break;
-                    case 3:
-                        <span>Tarjeta Credito</span>
-                        break;
-                    case 4:
-                        <span>Tarjeta Debito</span>
-                        break;
-                    default:
-                        <span>Estado desconocido</span>
-                    break;
-                }
-            }
+            @Html.DisplayFor(model => model.IdMetodoPagoNavigation.NomMetodoPago)
         </dd>
     </dl>
 </div>
@@ -144,7 +101,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        top: 593px;
+        top: 511px;
         position: absolute;
         border: 2px solid #000;
         border-radius: 10px;
@@ -157,7 +114,8 @@
     .separador {
         position: absolute;
         display: flex;
-        right: 77%;
+        right: 77.1%;
+        top: 514px;
     }
 
     .btn_volver {
@@ -171,7 +129,7 @@
         background-color: #393d3f;
         color: white;
         cursor: pointer;
-        top: 593px;
+        top: 511px;
         position: absolute;
         right: 71%;
     }

@@ -27,22 +27,22 @@ namespace ProyectoSenaLmour.Controllers
         }
 
         // GET: TipoServicios/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.TipoServicios == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.TipoServicios == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var tipoServicio = await _context.TipoServicios
-                .FirstOrDefaultAsync(m => m.IdTipoServicio == id);
-            if (tipoServicio == null)
-            {
-                return NotFound();
-            }
+        //    var tipoServicio = await _context.TipoServicios
+        //        .FirstOrDefaultAsync(m => m.IdTipoServicio == id);
+        //    if (tipoServicio == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(tipoServicio);
-        }
+        //    return View(tipoServicio);
+        //}
 
         // GET: TipoServicios/Create
         public IActionResult Create()

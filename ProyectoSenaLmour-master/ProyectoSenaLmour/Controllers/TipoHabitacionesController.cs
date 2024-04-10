@@ -68,50 +68,82 @@ namespace ProyectoSenaLmour.Controllers
         // GET: TipoHabitaciones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TipoHabitaciones == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoHabitacione = await _context.TipoHabitaciones.FindAsync(id);
-            if (tipoHabitacione == null)
+            var tipoHabitacion = await _context.TipoHabitaciones.FindAsync(id);
+            if (tipoHabitacion == null)
             {
                 return NotFound();
             }
-            return View(tipoHabitacione);
+
+            // Obtener la lista de nombres de tipos de habitaciones existentes
+            //var nombresTiposHabitacionesExistentes = await _context.TipoHabitaciones
+            //    .Where(th => th.IdTipoHabitacion != id) // Excluir el tipo de habitación actual
+            //    .Select(th => th.NomTipoHabitacion)
+            //    .ToListAsync();
+
+            // Crear una lista desplegable con los nombres de tipos de habitaciones existentes
+            //ViewData["NomTipoHabitacion"] = new SelectList(nombresTiposHabitacionesExistentes);
+            ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
+            return View(tipoHabitacion);
         }
 
         // POST: TipoHabitaciones/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTipoHabitacion,NomTipoHabitacion,NumeroPersonas,Estado")] TipoHabitacione tipoHabitacione)
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(int id, [Bind("IdTipoHabitacion,NomTipoHabitacion,NumeroPersonas,Estado")] TipoHabitacione tipoHabitacion)
+{
+    if (id != tipoHabitacion.IdTipoHabitacion)
+    {
+        return NotFound();
+    }
+
+    if (ModelState.IsValid)
+    {
+        try
         {
-            if (id != tipoHabitacione.IdTipoHabitacion)
+            var tipoHabitacionOriginal = await _context.TipoHabitaciones.FindAsync(id);
+            if (tipoHabitacionOriginal == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            // Actualizar los campos de la entidad original con los valores del formulario
+            tipoHabitacionOriginal.NomTipoHabitacion = tipoHabitacion.NomTipoHabitacion;
+            tipoHabitacionOriginal.NumeroPersonas = tipoHabitacion.NumeroPersonas;
+            tipoHabitacionOriginal.Estado = tipoHabitacion.Estado;
+
+            // Actualizar la entidad original en el contexto
+            _context.Update(tipoHabitacionOriginal);
+
+            // Guardar los cambios en la base de datos
+            await _context.SaveChangesAsync();
+
+            // Redirigir al índice después de guardar los cambios
+            return RedirectToAction(nameof(Index));
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            // Manejar excepciones de concurrencia aquí si es necesario
+            if (!TipoHabitacionExists(tipoHabitacion.IdTipoHabitacion))
             {
-                try
-                {
-                    _context.Update(tipoHabitacione);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TipoHabitacioneExists(tipoHabitacione.IdTipoHabitacion))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            return View(tipoHabitacione);
+            else
+            {
+                throw;
+            }
+        }
+    }
+    return View(tipoHabitacion);
+}
+
+        private bool TipoHabitacionExists(int idTipoHabitacion)
+        {
+            throw new NotImplementedException();
         }
 
         // GET: TipoHabitaciones/Delete/5

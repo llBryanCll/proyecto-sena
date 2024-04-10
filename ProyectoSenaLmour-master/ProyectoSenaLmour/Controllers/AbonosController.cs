@@ -61,8 +61,12 @@ namespace ProyectoSenaLmour.Controllers
             var pendiente = valordeuda;
             foreach (var abonado in abonos)
             {
-                pendiente -= abonado;
+                if (abonado.HasValue)
+                {
+                    pendiente -= abonado.Value;
+                }
             }
+
             ViewBag.pendiente = pendiente;
             return View();
         }

@@ -17,38 +17,49 @@ $(function () {
 });
 
 $(function () {
+    // Función para formatear la fecha en formato ISO (yyyy-mm-dd)
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    // Función para obtener la fecha actual en formato ISO
+    function getCurrentDate() {
+        var today = new Date();
+        return formatDate(today);
+    }
+
     // Inicializa el Datepicker para la fecha de ingreso
-    $("#fechaIngreso").datepicker({
-        minDate: 0, // Establece la fecha mínima como la fecha actual
-        dateFormat: "yy-mm-dd", // Formato de fecha
-        onSelect: function (selectedDate) {
-            var minDate = new Date(selectedDate); // Fecha de ingreso seleccionada
-            var today = new Date(); // Fecha actual
-            // Comprueba si la fecha de ingreso seleccionada es anterior a la fecha actual
-            if (minDate < today) {
-                // Establece la fecha de ingreso seleccionada como la fecha actual
-                $(this).datepicker("setDate", today);
-            }
-            // Establece la fecha mínima de salida como la fecha de ingreso seleccionada
-            $("#fechaSalida").datepicker("option", "minDate", minDate);
+    $("#fechaIngreso").change(function () {
+        var selectedDate = $(this).val();
+        var minDate = new Date(selectedDate);
+        var today = new Date();
+        if (minDate < today) {
+            $(this).val(getCurrentDate());
         }
+        $("#fechaSalida").attr("min", selectedDate);
     });
 
     // Inicializa el Datepicker para la fecha de salida
-    $("#fechaSalida").datepicker({
-        minDate: 0, // Establece la fecha mínima como la fecha actual
-        dateFormat: "yy-mm-dd", // Formato de fecha
-        onSelect: function (selectedDate) {
-            var maxDate = new Date(selectedDate); // Fecha de salida seleccionada
-            var minDate = $("#fechaIngreso").datepicker("getDate"); // Fecha de ingreso seleccionada
-            // Comprueba si la fecha de salida seleccionada es anterior a la fecha de ingreso
-            if (maxDate < minDate) {
-                // Establece la fecha de salida seleccionada como la fecha de ingreso seleccionada
-                $(this).datepicker("setDate", minDate);
-            }
+    $("#fechaSalida").change(function () {
+        var maxDate = new Date($(this).val());
+        var minDate = new Date($("#fechaIngreso").val());
+        if (maxDate < minDate) {
+            $(this).val($("#fechaIngreso").val());
         }
     });
 });
+
+
 
 var paqueteSeleccionado = [];
 var serviciosSeleccionados = [];
@@ -164,7 +175,7 @@ function actualizarInfoCosto() {
 
     $('#inputSubTotal').val(subTotal);
     $('#inputIva').val(iva);
-    $('#inputTotal').val(total);
+    $('#inputMontoTotal').val(total);
 }
 
 function calcularCostosServicio() {

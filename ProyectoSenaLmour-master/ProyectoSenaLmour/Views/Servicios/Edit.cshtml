@@ -16,18 +16,14 @@
             <input type="hidden" asp-for="IdServicio" />
             <div class="form-group">
                 <label asp-for="IdTipoServicio" class="control-label"></label>
-                <select asp-for="IdTipoServicio" class="form-control">
-                    <option value="">Seleccione un tipo de Servicio</option>
-                    <option value="1">Alimentacion</option>
-                    <option value="2">Recreacion</option>
-                    <option value="3">Bebida</option>
-                    <option value="4">Salud</option>
+                <select asp-for="IdTipoServicio" class="form-control" asp-items="ViewBag.IdTipoServicio">
+                    <option value="">Seleccionar tipo habitacion</option>
                 </select>
                 <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NomServicio" class="control-label"></label>
-                <input asp-for="NomServicio" class="form-control" />
+                <select asp-for="NomServicio" class="form-control" asp-items="ViewBag.NomServicio"></select>
                 <span asp-validation-for="NomServicio" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,7 +38,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
+                <select asp-for="Estado" class="form-control" asp-items="ViewBag.Estados">
+                    <option value="">Seleccionar estado</option>
+                </select>
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
             <div class="form-group">

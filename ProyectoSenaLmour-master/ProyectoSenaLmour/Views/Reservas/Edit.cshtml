@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Editar reserva</h1>
+<br>
+
+<h1>Editar Reserva</h1>
 
 <h4></h4>
 <hr />
@@ -158,66 +160,52 @@
         <a asp-action="Index" class="btn_volver">Volver</a>
     </div>
 </form>
+<br>
+<br>
 
 @section Scripts {
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="~/js/reservascript.js"></script>
 }
 
-    <style>
+<style>
 
-        .btn_guardar {
-            cursor: pointer;
-            top: 575px;
-            position: absolute;
-            border: 2px solid #000;
-            border-radius: 10px;
-            padding: 5px 5px;
-            width: 80px;
-            background-color: #393d3f;
-            color: white;
+    .btn_guardar {
+        cursor: pointer;
+        top: 620px;
+        position: absolute;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 5px 5px;
+        width: 80px;
+        background-color: #393d3f;
+        color: white;
+    }
 
-        }
+    .separador {
+        position: absolute;
+        display: flex;
+        right: 77.1%;
+        top: 625px;
+    }
 
-        .separador{
-            position: absolute;
-            display: flex;
-            right: 77.1%;
-        }
-
-        .btn_volver {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #000;
-            border-radius: 10px;
-            padding: 5px 5px;
-            width: 80px;
-            background-color: #393d3f;
-            color: white;
-            cursor: pointer;
-            top: 575px;
-            position: absolute;
-            right: 71%;
-        }
-
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-        const fecha = new Date();
-        var formato = 'dd/mm/yyyy';
-
-        const map = {
-            dd: (fecha.getDate() < 10 ? '0' : '') + fecha.getDate(),
-            mm: (fecha.getMonth() + 1 < 10 ? '0' : '') + (fecha.getMonth() + 1),
-            yyyy: fecha.getFullYear()
-        }
-
-        var fechaHoy = formato.replace(/dd|mm|yyyy/gi, matched => map[matched]);
-
-        $('#fechaHoy').val(fechaHoy);
-    </script>
-
+    .btn_volver {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 5px 5px;
+        width: 80px;
+        background-color: #393d3f;
+        color: white;
+        cursor: pointer;
+        top: 620px;
+        position: absolute;
+        right: 71%;
+    }
+</style>

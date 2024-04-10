@@ -145,7 +145,7 @@ namespace ProyectoSenaLmour.Controllers
         // POST: Paquetes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-       
+
 
         // GET: Paquetes/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -198,6 +198,8 @@ namespace ProyectoSenaLmour.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["IdHabitacion"] = new SelectList(_context.TipoHabitaciones, "IdHabitacion", "Nombre");
 
             var paquete = await _context.Paquetes
                 .Include(p => p.PaqueteServicios)
@@ -284,7 +286,3 @@ namespace ProyectoSenaLmour.Controllers
 
     }
 }
-
-
-
-   

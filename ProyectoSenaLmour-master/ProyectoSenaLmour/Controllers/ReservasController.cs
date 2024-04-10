@@ -29,6 +29,7 @@ namespace ProyectoSenaLmour.Controllers
             var reservas = _context.Reservas
                 .Include(r => r.IdEstadoReservaNavigation)
                 .Include(r => r.NroDocumentoClienteNavigation)
+                .Include(r => r.NroDocumentoUsuarioNavigation)
                 .ToList();
 
             return View(reservas);
@@ -64,31 +65,12 @@ namespace ProyectoSenaLmour.Controllers
         [HttpPost]
         public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
-
-            dynamic paqueteSeleccionadoObj = null;
-            dynamic serviciosSeleccionadosObj = null;
-
-            // Procesa los datos de paqueteSeleccionado si es necesario
-            if (!string.IsNullOrEmpty(paqueteSeleccionado))
-            {
-                paqueteSeleccionadoObj = JsonConvert.DeserializeObject(paqueteSeleccionado);
-                // Realiza cualquier procesamiento adicional que sea necesario con el objeto paqueteSeleccionadoObj
-            }
-
-            // Procesa los datos de serviciosSeleccionados si es necesario
-            if (!string.IsNullOrEmpty(serviciosSeleccionados))
-            {
-                serviciosSeleccionadosObj = JsonConvert.DeserializeObject(serviciosSeleccionados);
-                // Realiza cualquier procesamiento adicional que sea necesario con el objeto serviciosSeleccionadosObj
-            }
-
-            // Continúa con la lógica existente
             _context.Reservas.Add(oReservaVM.oReserva);
             _context.SaveChanges();
 
+
             return RedirectToAction("Index");
         }
-
 
         public IActionResult ObtenerCostoPaquete(int paqueteId)
         {
@@ -115,7 +97,7 @@ namespace ProyectoSenaLmour.Controllers
         }
 
 
-        // GET: Reservas/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Reservas == null)
@@ -137,8 +119,6 @@ namespace ProyectoSenaLmour.Controllers
             return View(reserva);
         }
 
-
-        // GET: Reservas/Edit/5
         public IActionResult Edit(int id)
         {
             // Buscar la reserva que se va a editar por su ID
@@ -178,9 +158,6 @@ namespace ProyectoSenaLmour.Controllers
             return View(oReservaVM);
         }
 
-        // POST: Reservas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public IActionResult Edit(int id, ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
@@ -208,11 +185,9 @@ namespace ProyectoSenaLmour.Controllers
                         throw; // Si hay un error de concurrencia, lanzar una excepción
                     }
                 }
-                return RedirectToAction("Index");
+               
             }
-
-            // Si llegamos aquí, significa que hubo un error en el modelo, volver a cargar la vista con los datos de la reserva
-            return View(oReservaVM);
+            return RedirectToAction("Index");
         }
 
         // Método auxiliar para verificar si una reserva existe

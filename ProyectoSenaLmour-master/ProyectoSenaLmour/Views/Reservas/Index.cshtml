@@ -10,7 +10,8 @@
 <script src="~/js/site.js"></script>
 
 <br>
-<br>
+<h1>Listado De Reservas</h1>
+
 <div class="card">
     <div class="card-header">
         <i class="fa-solid fa-calendar-check"></i>Listado De Reservas
@@ -74,12 +75,15 @@
 @foreach (var item in Model) {
         <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NroDocumentoClienteNavigation.NroDocumento)
+                    @Html.DisplayFor(modelItem => item.NroDocumentoClienteNavigation.Nombres)
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaReserva)
             </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.IdEstadoReservaNavigation.NombreEstadoReserva)
+                        </td>
+                        @* <td>
                             @switch (item.IdEstadoReservaNavigation.IdEstadoReserva)
                             {
                                 case 1:
@@ -104,7 +108,7 @@
                                     <span>Estado desconocido</span>
                                     break;
                             }
-                        </td>
+                        </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.MontoTotal)
                 </td>
