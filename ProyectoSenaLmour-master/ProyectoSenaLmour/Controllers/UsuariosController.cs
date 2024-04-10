@@ -29,18 +29,51 @@ namespace ProyectoSenaLmour.Controllers
         }
 
 
-        public IActionResult CambiarEstado(int id, string nuevoEstado)
-        {
-            // Update the user's state in your data store (e.g., database)
-            Usuario.UpdateEstado(id, nuevoEstado);
+        //public IActionResult CambiarEstado(int id, string nuevoEstado)
+        //{
+        //    // Update the user's state in your data store (e.g., database)
+        //    Usuario.UpdateEstado(id, nuevoEstado);
 
-            // Optional: Return a success message or redirect to another action
+        //    // Optional: Return a success message or redirect to another action
 
-            return Ok(); // Or other appropriate response
-        }
+        //    return Ok(); // Or other appropriate response
+        //}
 
-        // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+
+
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> CambiarEstado(int? id, string nuevoEstado)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var Usuarios = await _context.Clientes.FindAsync(id);
+			if (Usuarios == null)
+			{
+				return NotFound();
+			}
+
+			// Cambiar el estado del cliente
+			Usuarios.Estado = nuevoEstado;
+
+			// Guardar los cambios en la base de datos
+			await _context.SaveChangesAsync();
+
+			// Redirigir de vuelta a la vista de índice
+			return RedirectToAction(nameof(Index));
+		}
+
+
+
+
+
+		// GET: Usuarios/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Usuarios == null)
             {

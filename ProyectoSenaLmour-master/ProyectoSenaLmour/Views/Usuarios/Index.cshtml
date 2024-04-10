@@ -61,17 +61,17 @@
                         
                        @*  //prueba *@
 
-                            <div class="form-check form-switch">
+                           @*  <div class="form-check form-switch">
                                 <input class="form-check-input estado-switch" asp-controller="Usuarios" type="checkbox" id="switch-@item.NroDocumento" @(item.Estado == "Activo" ? "checked" : "") onchange="cambiarEstado(this)">
                                 <label class="form-check-label" for="switch-@item.NroDocumento">Cambiar Estado</label>
                             </div>
+ *@
 
 
 
 
-
-                           @*  <div class="border p-2 mb-3">
-                                <form asp-action="CambiarEstado" asp-controller="Clientes" method="post">
+                            <div class="border p-2 mb-3">
+                                <form asp-action="CambiarEstado" asp-controller="Usuarios" method="post">
                                     <input type="hidden" name="id" value="@item.NroDocumento" />
                                     <input type="hidden" name="nuevoEstado" value="@(item.Estado == "Activo" ? "Inactivo" : "Activo")" />
                                     <div class="form-check form-switch">
@@ -80,9 +80,9 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary mt-2">Guardar</button>
                                 </form>
-                            </div> *@
+                            </div> 
                         
-                       @*  //aca *@
+                       @*@*   //aca *@
                         
                         </td>
                     </tr>
@@ -92,7 +92,7 @@
     </div>
 </div>
 
-@section scripts {
+@* @section scripts {
     <script>
         function cambiarEstado(checkbox) {
             // Get the user ID from the checkbox ID
@@ -109,10 +109,10 @@
 
     </script>
 }
+ *@
 
 
 
-@* 
 @section scripts {
     <script>
         // Evento para cambiar el estado al hacer clic en el switch
@@ -122,4 +122,4 @@
         });
     </script>
 }
- *@
+
