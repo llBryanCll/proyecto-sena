@@ -85,13 +85,13 @@ namespace ProyectoSenaLmour.Controllers
             }
 
             // Obtener la lista de nombres de habitaciones existentes
-            var nombresHabitacionesExistentes = await _context.Habitaciones
-                .Where(h => h.IdHabitacion != id) // Excluir la habitación actual
-                .Select(h => h.Nombre)
-                .ToListAsync();
+            //var nombresHabitacionesExistentes = await _context.Habitaciones
+            //    .Where(h => h.IdHabitacion != id) // Excluir la habitación actual
+            //    .Select(h => h.Nombre)
+            //    .ToListAsync();
 
             // Crear una lista desplegable con los nombres de habitaciones existentes
-            ViewData["Nombre"] = new SelectList(nombresHabitacionesExistentes, habitacione.Nombre);
+            //ViewData["Nombre"] = new SelectList(nombresHabitacionesExistentes, habitacione.Nombre);
             ViewData["IdTipoHabitacion"] = new SelectList(_context.TipoHabitaciones, "IdTipoHabitacion", "NomTipoHabitacion", habitacione.IdTipoHabitacion);
             ViewData["Estados"] = new SelectList(new[] { "Activo", "Inactivo" });
             return View(habitacione);

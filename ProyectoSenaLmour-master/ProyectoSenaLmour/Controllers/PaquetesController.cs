@@ -199,6 +199,8 @@ namespace ProyectoSenaLmour.Controllers
                 return NotFound();
             }
 
+            ViewData["IdHabitacion"] = new SelectList(_context.TipoHabitaciones, "IdHabitacion", "Nombre");
+
             var paquete = await _context.Paquetes
                 .Include(p => p.PaqueteServicios)
                 .FirstOrDefaultAsync(m => m.IdPaquete == id);
