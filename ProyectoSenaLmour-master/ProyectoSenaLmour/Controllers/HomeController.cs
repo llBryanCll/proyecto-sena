@@ -19,18 +19,18 @@ namespace ProyectoSenaLmour.Controllers
             return View();
         }
 
-        public IActionResult Ventas()
+        public JsonResult DataPastel()
         {
-            return View();
+            SeriePastel serie = new SeriePastel();
+            return Json(serie.GetDataDummy());
         }
-        public IActionResult compras ()
+
+        public JsonResult DataBarras()
         {
-            return View();
+            SerieBarra serie = new SerieBarra();
+            return Json(serie.GetDataDummy());
         }
-        public IActionResult clientes ()
-        {
-            return View();
-        }
+
 
         public IActionResult Privacy()
         {
