@@ -78,8 +78,12 @@ namespace ProyectoSenaLmour.Controllers
 			return View("~/Views/Acceso/Registrar.cshtml");
 		}
 
+        //public IActionResult Registrar()
+        //{
+        //    return View("~/Views/Usuarios/Create.cshtml");
+        //}
 
-		public IActionResult Recuperar()
+        public IActionResult Recuperar()
 		{
 			return View("~/Views/Acceso/Recuperar.cshtml");
 		}
