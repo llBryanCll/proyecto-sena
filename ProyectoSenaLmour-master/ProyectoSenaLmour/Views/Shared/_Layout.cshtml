@@ -141,12 +141,13 @@
                             </nav>
                         </div>
 
-                        @if (User.IsInRole("Administrador"))
-                        {
+                       
                             <a class="nav-link" asp-area="" asp-controller="Reservas" asp-action="Index">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i> </div>
                             Reserva
-                        </a> }
+                        </a> 
+
+                        @* //esto lo que hace es quitarlo de la vista  *@
 
 <<<<<<< HEAD
                         @* @if (User.IsInRole("administrador"))

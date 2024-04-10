@@ -11,7 +11,7 @@ using ProyectoSenaLmour.Models;
 namespace ProyectoSenaLmour.Controllers
 {
     //<!--para privatizar las vistas--->
-    [Authorize(Roles = "administrador")]
+    //[Authorize(Roles = "administrador")]
     public class RolesController : Controller
     {
         private readonly LmourContext _context;

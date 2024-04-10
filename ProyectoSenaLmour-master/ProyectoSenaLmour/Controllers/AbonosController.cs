@@ -10,7 +10,9 @@ using ProyectoSenaLmour.Models;
 
 namespace ProyectoSenaLmour.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
+
+   
     public class AbonosController : Controller
     {
         private readonly LmourContext _context;
