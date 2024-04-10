@@ -74,12 +74,15 @@
 @foreach (var item in Model) {
         <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NroDocumentoClienteNavigation.NroDocumento)
+                    @Html.DisplayFor(modelItem => item.NroDocumentoClienteNavigation.Nombres)
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaReserva)
             </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.IdEstadoReservaNavigation.NombreEstadoReserva)
+                        </td>
+                        @* <td>
                             @switch (item.IdEstadoReservaNavigation.IdEstadoReserva)
                             {
                                 case 1:
@@ -104,7 +107,7 @@
                                     <span>Estado desconocido</span>
                                     break;
                             }
-                        </td>
+                        </td> *@
                 <td>
                     @Html.DisplayFor(modelItem => item.MontoTotal)
                 </td>

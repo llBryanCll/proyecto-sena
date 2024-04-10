@@ -17,33 +17,26 @@ $(function () {
 });
 
 $(function () {
-    // Inicializa el Datepicker para la fecha de ingreso
     $("#fechaIngreso").datepicker({
-        minDate: 0, // Establece la fecha mínima como la fecha actual
-        dateFormat: "yy-mm-dd", // Formato de fecha
+        minDate: 0,
+        dateFormat: "yy-mm-dd",
         onSelect: function (selectedDate) {
-            var minDate = new Date(selectedDate); // Fecha de ingreso seleccionada
-            var today = new Date(); // Fecha actual
-            // Comprueba si la fecha de ingreso seleccionada es anterior a la fecha actual
+            var minDate = new Date(selectedDate);
+            var today = new Date();
             if (minDate < today) {
-                // Establece la fecha de ingreso seleccionada como la fecha actual
                 $(this).datepicker("setDate", today);
             }
-            // Establece la fecha mínima de salida como la fecha de ingreso seleccionada
             $("#fechaSalida").datepicker("option", "minDate", minDate);
         }
     });
 
-    // Inicializa el Datepicker para la fecha de salida
     $("#fechaSalida").datepicker({
-        minDate: 0, // Establece la fecha mínima como la fecha actual
-        dateFormat: "yy-mm-dd", // Formato de fecha
+        minDate: 0,
+        dateFormat: "yy-mm-dd",
         onSelect: function (selectedDate) {
-            var maxDate = new Date(selectedDate); // Fecha de salida seleccionada
-            var minDate = $("#fechaIngreso").datepicker("getDate"); // Fecha de ingreso seleccionada
-            // Comprueba si la fecha de salida seleccionada es anterior a la fecha de ingreso
+            var maxDate = new Date(selectedDate);
+            var minDate = $("#fechaIngreso").datepicker("getDate");
             if (maxDate < minDate) {
-                // Establece la fecha de salida seleccionada como la fecha de ingreso seleccionada
                 $(this).datepicker("setDate", minDate);
             }
         }
@@ -164,7 +157,7 @@ function actualizarInfoCosto() {
 
     $('#inputSubTotal').val(subTotal);
     $('#inputIva').val(iva);
-    $('#inputTotal').val(total);
+    $('#inputMontoTotal').val(total);
 }
 
 function calcularCostosServicio() {

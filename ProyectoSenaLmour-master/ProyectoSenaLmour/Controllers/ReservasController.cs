@@ -25,6 +25,7 @@ namespace ProyectoSenaLmour.Controllers
             var reservas = _context.Reservas
                 .Include(r => r.IdEstadoReservaNavigation)
                 .Include(r => r.NroDocumentoClienteNavigation)
+                .Include(r => r.NroDocumentoUsuarioNavigation)
                 .ToList();
 
             return View(reservas);
@@ -60,31 +61,12 @@ namespace ProyectoSenaLmour.Controllers
         [HttpPost]
         public IActionResult Create(ReservaVM oReservaVM, string paqueteSeleccionado, string serviciosSeleccionados)
         {
-
-            dynamic paqueteSeleccionadoObj = null;
-            dynamic serviciosSeleccionadosObj = null;
-
-            // Procesa los datos de paqueteSeleccionado si es necesario
-            if (!string.IsNullOrEmpty(paqueteSeleccionado))
-            {
-                paqueteSeleccionadoObj = JsonConvert.DeserializeObject(paqueteSeleccionado);
-                // Realiza cualquier procesamiento adicional que sea necesario con el objeto paqueteSeleccionadoObj
-            }
-
-            // Procesa los datos de serviciosSeleccionados si es necesario
-            if (!string.IsNullOrEmpty(serviciosSeleccionados))
-            {
-                serviciosSeleccionadosObj = JsonConvert.DeserializeObject(serviciosSeleccionados);
-                // Realiza cualquier procesamiento adicional que sea necesario con el objeto serviciosSeleccionadosObj
-            }
-
-            // Continúa con la lógica existente
             _context.Reservas.Add(oReservaVM.oReserva);
             _context.SaveChanges();
 
+
             return RedirectToAction("Index");
         }
-
 
         public IActionResult ObtenerCostoPaquete(int paqueteId)
         {
@@ -132,7 +114,6 @@ namespace ProyectoSenaLmour.Controllers
 
             return View(reserva);
         }
-
 
         // GET: Reservas/Edit/5
         public IActionResult Edit(int id)
