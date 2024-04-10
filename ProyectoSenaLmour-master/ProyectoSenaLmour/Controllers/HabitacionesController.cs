@@ -55,7 +55,7 @@ namespace ProyectoSenaLmour.Controllers
         // POST: Habitaciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTipoHabitacion,IdHabitacion,NumeroHabitacion,Nombre,Estado,Descripcion,Costo")] Habitacione habitacion)
+        public async Task<IActionResult> Create([Bind("IdTipoHabitacion,IdHabitacion/*,NumeroHabitacion*/,Nombre,Estado,Descripcion,Costo")] Habitacione habitacion)
         {
             if (ModelState.IsValid)
             {
